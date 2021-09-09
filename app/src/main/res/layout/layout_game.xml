@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.04"
+        android:orientation="vertical" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.27"
+        android:orientation="vertical" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.50"
+        android:orientation="vertical" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.73"
+        android:orientation="vertical" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.96"
+        android:orientation="vertical" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.04"
+        android:orientation="horizontal" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.27" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.50"
+        android:orientation="horizontal" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.73"
+        android:orientation="horizontal" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/horizontal_guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.96"
+        android:orientation="horizontal" />
+
+    <FrameLayout
+        android:id="@+id/field11"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field12"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field13"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field14"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field21"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field22"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field23"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field24"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field31"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field32"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field33"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field34"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field41"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field42"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field43"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field44"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
+        android:background="@android:color/transparent" />
+
+    <TextView
+        android:id="@+id/piece1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_1"/>
+
+    <TextView
+        android:id="@+id/piece2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_2"/>
+
+    <TextView
+        android:id="@+id/piece3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_3"/>
+
+    <TextView
+        android:id="@+id/piece4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_4"/>
+
+    <TextView
+        android:id="@+id/piece5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_5"/>
+
+    <TextView
+        android:id="@+id/piece6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_6"/>
+
+    <TextView
+        android:id="@+id/piece7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_7"/>
+
+    <TextView
+        android:id="@+id/piece8"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_8"/>
+
+    <TextView
+        android:id="@+id/piece9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_9"/>
+
+    <TextView
+        android:id="@+id/piece10"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_10"/>
+
+    <TextView
+        android:id="@+id/piece11"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_11"/>
+
+    <TextView
+        android:id="@+id/piece12"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_12"/>
+
+    <TextView
+        android:id="@+id/piece13"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_13"/>
+
+    <TextView
+        android:id="@+id/piece14"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_14"/>
+
+    <TextView
+        android:id="@+id/piece15"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
+        android:layout_margin="@dimen/piece_margin"
+        android:textColor="@color/fieldTextColor"
+        android:textSize="@dimen/piece_text_size"
+        android:gravity="center"
+        android:text="@string/label_15"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
