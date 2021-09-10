@@ -3,6 +3,7 @@ package com.stho.mobipuzzle.ui.home
 import android.app.Application
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.*
 import com.stho.mobipuzzle.*
 import kotlinx.coroutines.CoroutineScope
@@ -11,59 +12,58 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var pieceNumber: Int = 0
-    private val game: Game = Game()
+    val game: Game = Game()
+
+    private var started: Boolean = false
     private var movesCounter: Int = 0
     private var startTimeMillis: Long = 0
     private val handler = Handler(Looper.getMainLooper())
-    private val repository: Repository = Dependencies.getRepository(application)
-
+    private val repository: Repository = application.getRepository()
 
     private val gameLiveData = MutableLiveData<Game>().apply { value = game }
     private val movesCounterLiveData = MutableLiveData<Int>().apply { value = 0 }
     private val secondsCounterLiveData = MutableLiveData<Long>().apply { value = 0 }
 
-    val headlineLD: LiveData<String>
-        get() = Transformations.map(repository.repositoryLD) {
-            getApplication<Application>().getString(R.string.label_headline_param,
-                it.ratingPoints,
-                it.games,
-            )
-        }
-
     val gameLD: LiveData<Game> = gameLiveData
     val movesCounterLD: LiveData<Int> = movesCounterLiveData
     val secondsCounterLD: LiveData<Long> = secondsCounterLiveData
 
-    fun startDragging(pieceNumber: Int) {
-        this.pieceNumber = pieceNumber
-    }
-
-    fun finishDragging() {
-        this.pieceNumber = 0
-    }
-
-    val canStartDragging: Boolean
-        get() = (this.pieceNumber == 0)
-
-    fun isMove(fieldNumber: Int): Boolean {
+    fun canMoveTo(pieceNumber: Int, fieldNumber: Int): Boolean {
         val from = game.getFieldNumberOf(pieceNumber)
-        return fieldNumber != from
+        return canMoveFromTo(from, fieldNumber)
     }
 
-    fun canMoveTo(fieldNumber: Int): Boolean {
+    private fun canMoveFromTo(from: Int, to: Int): Boolean =
+        game.canMoveTo(from, to)
+
+    fun moveTo(pieceNumber: Int, fieldNumber: Int): Boolean {
         val from = game.getFieldNumberOf(pieceNumber)
-        return game.canSwap(from, fieldNumber)
+        return moveTo(pieceNumber, from, fieldNumber)
     }
 
-    fun moveTo(fieldNumber: Int) {
-        val from = game.getFieldNumberOf(pieceNumber)
-        if (from > 0 && game.canSwap(from, fieldNumber)) {
-            game.swap(from, fieldNumber)
-            gameLiveData.postValue(game)
-            countMove()
-            if (game.isSolved) {
+    private fun moveTo(pieceNumber: Int, from: Int, to: Int): Boolean =
+        if (canMoveFromTo(from, to)) {
+            Log.d("MOVE", "Moving of $pieceNumber from $from to $to ...")
+            moveFromTo(from, to)
+            true
+        } else {
+            Log.d("MOVE", "Cannot move $pieceNumber from $from to $to")
+            false
+        }
+
+    private fun moveFromTo(from: Int, to: Int) {
+        game.moveTo(from, to)
+        gameLiveData.postValue(game)
+        countMove()
+        if (game.isSolved) {
+            if (started) {
+                repository.registerGame(
+                    movesCounterLD.value ?: 0,
+                    seconds = secondsCounterLD.value ?: 0L,
+                    true
+                )
                 stopSecondsCounter()
+                started = false
             }
         }
     }
@@ -103,13 +103,17 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun startNew() {
-        game.shuffleByMoves(10000)
+        if (!game.isSolved) {
+            repository.registerGame(movesCounterLD.value ?: 0, secondsCounterLD.value ?: 0L, false)
+        }
+        game.shuffle(1000)
         movesCounter = 0
         startTimeMillis = currentMillis
         gameLiveData.postValue(game)
         secondsCounterLiveData.postValue(0)
         movesCounterLiveData.postValue(0)
         startSecondsCounter()
+        started = true
     }
 
     companion object {

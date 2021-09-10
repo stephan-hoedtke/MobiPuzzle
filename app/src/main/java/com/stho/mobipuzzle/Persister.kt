@@ -1,9 +1,7 @@
 package com.stho.mobipuzzle
 
-import android.app.Application
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import java.lang.Appendable
 
 class Persister(private val context: Context): IPersister {
 

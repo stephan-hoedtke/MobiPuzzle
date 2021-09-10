@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backgroundColor">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/vertical_guideline1"
@@ -77,139 +76,139 @@
         android:orientation="horizontal" />
 
     <FrameLayout
-        android:id="@+id/field11"
+        android:id="@+id/field1"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
         app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field8"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field10"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/field11"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
         android:background="@android:color/transparent" />
 
     <FrameLayout
         android:id="@+id/field12"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
-        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
         android:background="@android:color/transparent" />
 
     <FrameLayout
         android:id="@+id/field13"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
-        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
         android:background="@android:color/transparent" />
 
     <FrameLayout
         android:id="@+id/field14"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
-        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
-        android:background="@android:color/transparent" />
-
-    <FrameLayout
-        android:id="@+id/field21"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
-        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
-        android:background="@android:color/transparent" />
-
-    <FrameLayout
-        android:id="@+id/field22"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
-        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
-        android:background="@android:color/transparent" />
-
-    <FrameLayout
-        android:id="@+id/field23"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
-        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
-        android:background="@android:color/transparent" />
-
-    <FrameLayout
-        android:id="@+id/field24"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
-        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
-        android:background="@android:color/transparent" />
-
-    <FrameLayout
-        android:id="@+id/field31"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
-        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
-        android:background="@android:color/transparent" />
-
-    <FrameLayout
-        android:id="@+id/field32"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
-        app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
-        android:background="@android:color/transparent" />
-
-    <FrameLayout
-        android:id="@+id/field33"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
-        app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
-        android:background="@android:color/transparent" />
-
-    <FrameLayout
-        android:id="@+id/field34"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
-        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
-        android:background="@android:color/transparent" />
-
-    <FrameLayout
-        android:id="@+id/field41"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
-        app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
-        app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
-        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
-        android:background="@android:color/transparent" />
-
-    <FrameLayout
-        android:id="@+id/field42"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
         app:layout_constraintEnd_toEndOf="@id/vertical_guideline3"
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
@@ -217,7 +216,7 @@
         android:background="@android:color/transparent" />
 
     <FrameLayout
-        android:id="@+id/field43"
+        android:id="@+id/field15"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
@@ -227,7 +226,7 @@
         android:background="@android:color/transparent" />
 
     <FrameLayout
-        android:id="@+id/field44"
+        android:id="@+id/field16"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
@@ -236,7 +235,7 @@
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
         android:background="@android:color/transparent" />
 
-    <TextView
+     <TextView
         android:id="@+id/piece1"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -445,6 +444,27 @@
         android:textSize="@dimen/piece_text_size"
         android:gravity="center"
         android:text="@string/label_15"/>
+
+    <FrameLayout
+        android:id="@+id/dragView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
+        android:background="@android:color/transparent" />
+
+    <FrameLayout
+        android:id="@+id/targetView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/vertical_guideline4"
+        app:layout_constraintEnd_toEndOf="@id/vertical_guideline5"
+        app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
+        app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
+        android:background="@android:color/transparent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

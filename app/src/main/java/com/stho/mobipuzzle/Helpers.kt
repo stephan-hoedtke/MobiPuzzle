@@ -1,7 +1,9 @@
 package com.stho.mobipuzzle
 
 import android.content.ClipData
-import java.lang.Exception
+import android.view.View
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 
 class Helpers {
     companion object {
@@ -15,20 +17,18 @@ class Helpers {
             return ClipData.newPlainText(PIECE, pieceNumber.toString())
         }
 
-        fun getPieceNumber(data: ClipData?): Int {
-            try {
-                data?.also {
-                    if (PIECE == it.description.toString()) {
-                        val text: String = it.getItemAt(0).text.toString()
-                        return text.toInt()
-                    }
-                }
-                return 0
+        fun getPieceNumber(piece: TextView): Int {
+            return try {
+                piece.text.toString().toInt()
             } catch (ex: Exception) {
-                return 0
+                0
             }
         }
 
         private const val PIECE = "PIECE"
     }
+}
+
+fun View.getColor(resId: Int): Int {
+    return ContextCompat.getColor(this.context, resId)
 }

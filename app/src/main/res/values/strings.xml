@@ -2,10 +2,6 @@
     <string name="app_name">Mobile Puzzle</string>
     <string name="title_home">Mobile Puzzle</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="label_field">field</string>
-    <string name="label_moves_param">Moves: %d</string>
-    <string name="label_headline_param">%.1f points in %d games</string>
     <string name="label_new_game">New Game</string>
     <string name="label_15">15</string>
     <string name="label_14">14</string>
@@ -25,4 +21,14 @@
     <string name="default_time">45:30</string>
     <string name="default_moves">Moves: 23</string>
     <string name="default_headline">Headline</string>
+    <plurals name="label_moves_plurals">
+        <item quantity="zero">no moves</item>
+        <item quantity="one">1 move</item>
+        <item quantity="other">%d moves</item>
+    </plurals>
+    <plurals name="label_headline_plurals">
+        <item quantity="zero">no points in no games</item>
+        <item quantity="one">%.1f points in one game</item>
+        <item quantity="other">%.1f points in %d games</item>
+    </plurals>
 </resources>

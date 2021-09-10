@@ -1,11 +1,10 @@
 package com.stho.mobipuzzle
 
 import android.graphics.Color
+import android.util.Log
 import android.view.DragEvent
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
-import androidx.core.content.ContextCompat
+import android.widget.TextView
 import com.stho.mobipuzzle.ui.home.HomeViewModel
 
 /**
@@ -17,78 +16,74 @@ class MyDragListener(private val fieldNumber: Int, private val viewModel: HomeVi
 
     override fun onDrag(view: View, event: DragEvent): Boolean {
 
-//    val enterShape: Drawable = getResources().getDrawable(R.drawable.shape_droptarget);
-//    Drawable normalShape = getResources().getDrawable(R.drawable.shape);
-
-        return when (event.action) {
+        when (event.action) {
 
             DragEvent.ACTION_DRAG_LOCATION -> {
-                // do nothing ??
-                true
+                return true
             }
             DragEvent.ACTION_DRAG_STARTED -> {
-                //val pieceNumber = Helpers.getPieceNumber(event.clipData)
-                //return (pieceNumber > 0)
                 return true
             }
             DragEvent.ACTION_DRAG_ENTERED -> {
-                if (viewModel.isMove(fieldNumber)) {
-                    if (viewModel.canMoveTo(fieldNumber)) {
+                val pieceNumber = Helpers.getPieceNumber(event.localState as TextView)
+                if (pieceNumber > 0) {
+                    if (viewModel.canMoveTo(pieceNumber, fieldNumber)) {
+                        Log.d("DRAG", "Entering target $fieldNumber")
                         markAsTarget(view)
                     } else {
+                        Log.d("DRAG", "Entering $fieldNumber (invalid)")
                         markAsInvalidTarget(view)
                     }
-                } else {
-                    markAsNormal(view)
+                    return true
                 }
-                true
+                return false
             }
             DragEvent.ACTION_DRAG_EXITED -> {
+                Log.d("DRAG", "Exiting $fieldNumber")
                 markAsNormal(view)
-                true
+                return true
             }
             DragEvent.ACTION_DROP -> {
-                viewModel.moveTo(fieldNumber)
-                true
+                val pieceNumber = Helpers.getPieceNumber(event.localState as TextView)
+                if (pieceNumber > 0) {
+                    Log.d("DRAG", "Drop into $fieldNumber")
+                    return viewModel.moveTo(pieceNumber, fieldNumber)
+                }
+                return false
             }
             DragEvent.ACTION_DRAG_ENDED -> {
                 markAsNormal(view)
-                viewModel.finishDragging()
+                Log.d("DRAG", "Drag ended in $fieldNumber with result ${event.result}")
                 viewModel.touch()
-                true
+                val piece = event.localState as TextView
+                piece.setBackgroundColor(piece.getColor(R.color.fieldColor))
+                piece.setTextColor(piece.getColor(R.color.fieldTextColor))
+                piece.invalidate()
+                return true
             }
             else -> {
                 // nothing
-                false
+                Log.d("DRAG", "Unknown for $fieldNumber")
+                return false
             }
         }
-    }
-
-    private fun movePieceToTargetView(view: View, event: DragEvent) {
-        val piece: View = event.localState as View
-        val target: FrameLayout = view as FrameLayout
-        movePieceToTargetView(piece, target)
-    }
-
-    private fun movePieceToTargetView(piece: View, target: FrameLayout) {
-        val owner: ViewGroup = piece.parent as ViewGroup
-        owner.removeView(piece)
-        target.addView(piece)
-        piece.visibility = View.VISIBLE
     }
 
     private fun markAsNormal(view: View) {
         view.setBackgroundColor(Color.TRANSPARENT)
         view.visibility = View.VISIBLE
+        view.invalidate()
     }
 
     private fun markAsTarget(view: View) {
-        view.setBackgroundColor(ContextCompat.getColor(view.context, R.color.secondaryColor))
+        view.setBackgroundColor(view.getColor(R.color.secondaryColor))
         view.visibility = View.VISIBLE
+        view.invalidate()
     }
 
     private fun markAsInvalidTarget(view: View) {
         view.setBackgroundColor(Color.TRANSPARENT)
         view.visibility = View.VISIBLE
+        view.invalidate()
     }
 }

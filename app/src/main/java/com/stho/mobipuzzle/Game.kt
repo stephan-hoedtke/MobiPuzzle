@@ -1,6 +1,5 @@
 package com.stho.mobipuzzle
 
-import java.security.InvalidParameterException
 import kotlin.random.Random
 
 /**
@@ -19,35 +18,79 @@ class Game {
         array[fieldNumber - 1] = value
     }
 
-    fun canSwap(fromFieldNumber: Int, toFieldNumber: Int): Boolean {
-        return isNextTo(fromFieldNumber, toFieldNumber) && isEmpty(toFieldNumber)
-    }
-
-    private fun isEmpty(fieldNumber: Int): Boolean {
-        return get(fieldNumber) == 0
-    }
-
-    /**
-     * from: Int in 1..16 and to: Int in 1..16
-     */
-    fun swap(fromFieldNumber: Int, toFieldNumber: Int) {
-        val x = get(fromFieldNumber)
-        val y = get(toFieldNumber)
-        set(fromFieldNumber, y)
-        set(toFieldNumber, x)
-    }
-
-    fun shuffle(): Game {
-        initialize()
-        // Richard Durstenfeld in 1964, based on Fisher and Yates
-        for (i: Int in 15 downTo 1) {
-            val j = Random.nextInt(i)
-            array.swap(i, j)
+    fun canMoveTo(fromFieldNumber: Int, toFieldNumber: Int): Boolean {
+        if (isNextTo(fromFieldNumber, toFieldNumber)) {
+            if (isEmpty(toFieldNumber)) {
+                return true
+            }
+            if (canMoveTo(toFieldNumber, toFieldNumber + (toFieldNumber - fromFieldNumber))) {
+                return true
+            }
         }
-        return this
+        return false
     }
 
-    fun shuffleByMoves(n: Int): Game {
+    private fun isEmpty(fieldNumber: Int): Boolean =
+        get(fieldNumber) == 0
+
+    private fun setEmpty(fieldNumber: Int) {
+        set(fieldNumber, 0)
+    }
+
+    fun moveTo(fromFieldNumber: Int, toFieldNumber: Int) {
+        if (!isEmpty(toFieldNumber)) {
+            moveTo(toFieldNumber, toFieldNumber + (toFieldNumber - fromFieldNumber))
+        }
+        val x = get(fromFieldNumber)
+        set(toFieldNumber, x)
+        setEmpty(fromFieldNumber)
+    }
+
+    class Move(
+        val pieceNumber: Int,
+        val fromFieldNumber: Int,
+        val toFieldNumber: Int,
+        val movingFields: ArrayList<Int>,
+        val canMove: Boolean)
+
+    fun analyze(pieceNumber: Int): Move {
+        val fromFieldNumber = getFieldNumberOf(pieceNumber)
+        val neighbours = arrayOf(fromFieldNumber - 4, fromFieldNumber - 1, fromFieldNumber + 1, fromFieldNumber + 4)
+        for (toFieldNumber: Int in neighbours) {
+            val array = analyze(fromFieldNumber, toFieldNumber)
+            if (array.isNotEmpty()) {
+                return Move(
+                    pieceNumber,
+                    fromFieldNumber,
+                    toFieldNumber,
+                    movingFields = array,
+                    canMove = true,
+                )
+            }
+        }
+        return Move(
+            pieceNumber,
+            fromFieldNumber,
+            toFieldNumber = 0,
+            movingFields = ArrayList(),
+            canMove = false
+        )
+    }
+
+    private fun analyze(from: Int, to: Int): ArrayList<Int> {
+        if (isNextTo(from, to)) {
+            if (isEmpty(to)) {
+                return ArrayList<Int>().also { it.add(from) }
+            }
+            val array = analyze(to, to + (to - from))
+            if (array.isNotEmpty()) {
+                return array.also { it.add(from) }
+            }
+        }
+        return ArrayList()
+    }
+
+    fun shuffle(n: Int): Game {
         initialize()
         val i = getIndexOf(0)
         move(n, i)
@@ -125,6 +168,7 @@ class Game {
 
     private fun isNextTo(from: Int, to: Int): Boolean {
         return when (from) {
+
             1 -> { to == 2 || to == 5 }
             2 -> { to == 1 || to == 3 || to == 6 }
             3 -> { to == 2 || to == 4 || to == 7 }
@@ -145,7 +189,7 @@ class Game {
             15 -> { to == 11 || to == 14 || to == 16  }
             16 -> { to == 12 || to == 15 }
 
-            else -> throw InvalidParameterException()
+            else -> false
         }
     }
 }

@@ -37,8 +37,8 @@ class Repository(games: Int, ratingPoints: Double) {
 
     fun registerGame(moves: Int, seconds: Long, result: Boolean) {
         if (result) {
-            val a: Double = SECONDS_THRESHOLD / (seconds + 1.0)
-            val b: Double = MOVES_THRESHOLD / (moves + 1.0)
+            val a: Double = SECONDS_THRESHOLD / (seconds + SECONDS_THRESHOLD)
+            val b: Double = MOVES_THRESHOLD / (moves + MOVES_THRESHOLD)
             val points = a * b
             increaseRatingBy(points)
         } else {
@@ -70,7 +70,7 @@ class Repository(games: Int, ratingPoints: Double) {
                     }
                 }
 
-        private const val SECONDS_THRESHOLD: Long = 600 // 10 Minutes
-        private const val MOVES_THRESHOLD: Int = 300
+        private const val SECONDS_THRESHOLD: Double = 600.0 // 10 Minutes
+        private const val MOVES_THRESHOLD: Double = 300.0
     }
  }

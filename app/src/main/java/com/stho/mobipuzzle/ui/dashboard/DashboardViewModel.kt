@@ -1,13 +1,30 @@
 package com.stho.mobipuzzle.ui.dashboard
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModelProvider
+import com.stho.mobipuzzle.R
+import com.stho.mobipuzzle.Repository
+import com.stho.mobipuzzle.getRepository
 
-class DashboardViewModel : ViewModel() {
+class DashboardViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+    private val repository: Repository = application.getRepository()
+
+    val headlineLD: LiveData<String>
+        get() = Transformations.map(repository.repositoryLD) {
+            getApplication<Application>().resources.getQuantityString(R.plurals.label_headline_plurals,
+                it.games,
+                it.ratingPoints,
+                it.games,
+            )
+        }
+
+    companion object {
+        fun build(fragment: DashboardFragment): DashboardViewModel {
+            return ViewModelProvider(fragment.requireActivity()).get(DashboardViewModel::class.java)
+        }
     }
-    val text: LiveData<String> = _text
 }
