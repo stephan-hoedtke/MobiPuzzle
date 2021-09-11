@@ -1,5 +1,6 @@
 package com.stho.mobipuzzle
 
+import java.security.InvalidParameterException
 import kotlin.random.Random
 
 /**
@@ -46,14 +47,26 @@ class Game {
         setEmpty(fromFieldNumber)
     }
 
-    class Move(
-        val pieceNumber: Int,
-        val fromFieldNumber: Int,
-        val toFieldNumber: Int,
-        val movingFields: ArrayList<Int>,
-        val canMove: Boolean)
+    enum class Direction {
+        UP,
+        LEFT,
+        RIGHT,
+        DOWN,
+        NOTHING,
+    }
 
-    fun analyze(pieceNumber: Int): Move {
+    class Move(val pieceNumber: Int, val fromFieldNumber: Int, val toFieldNumber: Int, val movingFields: ArrayList<Int>) {
+        val direction: Direction =
+            when (toFieldNumber - fromFieldNumber) {
+                1 -> Direction.RIGHT
+                4 -> Direction.DOWN
+                -1 -> Direction.LEFT
+                -4 -> Direction.UP
+                else -> Direction.NOTHING
+            }
+    }
+
+    fun analyze(pieceNumber: Int): Move? {
         val fromFieldNumber = getFieldNumberOf(pieceNumber)
         val neighbours = arrayOf(fromFieldNumber - 4, fromFieldNumber - 1, fromFieldNumber + 1, fromFieldNumber + 4)
         for (toFieldNumber: Int in neighbours) {
@@ -64,17 +77,10 @@ class Game {
                     fromFieldNumber,
                     toFieldNumber,
                     movingFields = array,
-                    canMove = true,
                 )
             }
         }
-        return Move(
-            pieceNumber,
-            fromFieldNumber,
-            toFieldNumber = 0,
-            movingFields = ArrayList(),
-            canMove = false
-        )
+        return null
     }
 
     private fun analyze(from: Int, to: Int): ArrayList<Int> {
@@ -138,12 +144,18 @@ class Game {
             return true
         }
 
-
     /**
      * Returns the fieldNumber in the range of 1..16 where the piece is found, or 0 otherwise
      */
     fun getFieldNumberOf(pieceNumber: Int): Int {
         return getIndexOf(pieceNumber) + 1
+    }
+
+    /**
+     * Returns the pieceNumber in the range of 1..15 which is found in the field, or 0 if there is no piece
+     */
+    fun getPieceNumberOf(fieldNumber: Int): Int {
+        return get(fieldNumber)
     }
 
     private fun getIndexOf(pieceNumber: Int): Int {

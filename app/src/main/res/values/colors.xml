@@ -11,4 +11,5 @@
     <color name="backgroundColor">#002d00</color>
     <color name="fieldColor">#a42700</color>
     <color name="fieldTextColor">#ffF9E2</color>
+    <color name="fieldAccentColor">#841700</color>
 </resources>
