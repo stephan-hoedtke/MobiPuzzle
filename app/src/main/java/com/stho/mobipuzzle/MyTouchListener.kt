@@ -1,12 +1,17 @@
 package com.stho.mobipuzzle
 
+import android.animation.Animator
+import android.animation.Animator.AnimatorListener
 import android.annotation.SuppressLint
 import android.graphics.Point
 import android.opengl.Visibility
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.core.os.persistableBundleOf
+import androidx.dynamicanimation.animation.DynamicAnimation
 import com.stho.mobipuzzle.databinding.FragmentHomeBinding
 import com.stho.mobipuzzle.ui.home.HomeFragment
 import com.stho.mobipuzzle.ui.home.HomeViewModel
@@ -16,7 +21,9 @@ import java.security.InvalidParameterException
 
 class MyTouchListener(private val pieceNumber: Int, private val viewModel: HomeViewModel, private val binding: FragmentHomeBinding) : View.OnTouchListener {
 
-    class Position(val x: Float = 0f, val y: Float = 0f)
+    class Position(val x: Float = 0f, val y: Float = 0f) {
+        fun add(dx: Float, dy: Float): Position = Position(x + dx, y + dy)
+    }
 
     private val pieceStartPositions: HashMap<Int, Position> = HashMap()
     private var startPosition: Position = Position()
@@ -37,8 +44,6 @@ class MyTouchListener(private val pieceNumber: Int, private val viewModel: HomeV
                 move?.also {
                     startPosition = Position(motionEvent.rawX, motionEvent.rawY)
                     initializeDragViews(it)
-                } ?: {
-                    restoreDragViews()
                 }
                 true
             }
@@ -52,7 +57,6 @@ class MyTouchListener(private val pieceNumber: Int, private val viewModel: HomeV
                 move?.also {
                     moveDragViews(motionEvent, it)
                 }
-                restoreDragViews()
                 move = null
                 viewModel.touch()
                 true
@@ -106,18 +110,120 @@ class MyTouchListener(private val pieceNumber: Int, private val viewModel: HomeV
             else -> false
         }
         if (isMove) {
-            restoreDragViews(false)
+            moveDragViews(move)
             viewModel.moveTo(move.pieceNumber, move.toFieldNumber)
+        } else {
+            restoreDragViews(move)
         }
     }
 
-    private fun restoreDragViews(visible: Boolean = true) {
-        for (pieceNumber in pieceStartPositions.keys) {
-            val position = pieceStartPositions[pieceNumber] ?: Position()
+    private fun getStartPosition(pieceNumber: Int): Position {
+        return pieceStartPositions[pieceNumber] ?: Position()
+    }
+
+    private fun restoreDragViews(move: Game.Move) {
+        for (fieldNumber in move.movingFields) {
+            val pieceNumber = game.getPieceNumberOf(fieldNumber)
             val piece: TextView = getPiece(pieceNumber)
-            piece.visibility = if (visible) View.VISIBLE else View.INVISIBLE
+            val position = getStartPosition(pieceNumber)
             piece.x = position.x
             piece.y = position.y
+            piece.visibility = View.INVISIBLE
+        }
+        viewModel.touch()
+//            if (piece.x != position.x || piece.y != position.y)
+//                piece.animate()
+//                    .setDuration(DURATION)
+//                    .x(position.x)
+//                    .y(position.y)
+//                    .setListener(object : AnimatorListener {
+//                        override fun onAnimationStart(p0: Animator?) {
+//                            // ignore
+//                        }
+//
+//                        override fun onAnimationEnd(p0: Animator?) {
+//                            // ignore
+//                            viewModel.touch()
+//                        }
+//
+//                        override fun onAnimationCancel(p0: Animator?) {
+//                            // ignore
+//                        }
+//
+//                        override fun onAnimationRepeat(p0: Animator?) {
+//                            // ignore
+//                        }
+//                    })
+    }
+
+    private fun getPositionOf(fieldNumber: Int): Position {
+        val field: FrameLayout = getFieldFor(fieldNumber)
+        return Position(field.x, field.y)
+    }
+
+    private fun moveDragViews(move: Game.Move) {
+        val fromPosition = getPositionOf(move.fromFieldNumber)
+        val toPosition = getPositionOf(move.toFieldNumber)
+        val dx = toPosition.x - fromPosition.x
+        val dy = toPosition.y - fromPosition.y
+        for (fieldNumber in move.movingFields) {
+            val pieceNumber = game.getPieceNumberOf(fieldNumber)
+            val piece: TextView = getPiece(pieceNumber)
+            val position = getStartPosition(pieceNumber)
+            val targetPosition = position.add(dx, dy)
+            piece.visibility = View.INVISIBLE
+            piece.x = targetPosition.x
+            piece.y = targetPosition.y
+        }
+        viewModel.touch()
+//
+//            if (piece.x != targetPosition.x || piece.y != targetPosition.y) {
+//                val animator = piece.animate()
+//                    .setDuration(DURATION)
+//                    .x(targetPosition.x)
+//                    .y(targetPosition.y)
+//                    .setListener(object : AnimatorListener {
+//                        override fun onAnimationStart(p0: Animator?) {
+//                            // ignore
+//                        }
+//
+//                        override fun onAnimationEnd(p0: Animator?) {
+//                            piece.visibility = View.INVISIBLE
+//                            piece.x = position.x
+//                            piece.y = position.y
+//                            viewModel.touch()
+//                        }
+//
+//                        override fun onAnimationCancel(p0: Animator?) {
+//                            // ignore
+//                        }
+//
+//                        override fun onAnimationRepeat(p0: Animator?) {
+//                            // ignore
+//                        }
+//                    })
+//            } else {     }
+    }
+
+    private fun getFieldFor(fieldNumber: Int): FrameLayout {
+        return when (fieldNumber) {
+            1 -> binding.board.field1
+            2 -> binding.board.field2
+            3 -> binding.board.field3
+            4 -> binding.board.field4
+            5 -> binding.board.field5
+            6 -> binding.board.field6
+            7 -> binding.board.field7
+            8 -> binding.board.field8
+            9 -> binding.board.field9
+            10 -> binding.board.field10
+            11 -> binding.board.field11
+            12 -> binding.board.field12
+            13 -> binding.board.field13
+            14 -> binding.board.field14
+            15 -> binding.board.field15
+            16 -> binding.board.field16
+            else -> throw InvalidParameterException()
         }
     }
 
@@ -144,6 +250,7 @@ class MyTouchListener(private val pieceNumber: Int, private val viewModel: HomeV
 
     companion object {
         private const val THRESHOLD = 30f
+        private const val DURATION = 300L
     }
 
 }

@@ -8,18 +8,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import com.stho.mobipuzzle.*
 import com.stho.mobipuzzle.databinding.FragmentHomeBinding
 import java.security.InvalidParameterException
 
 
+
 class HomeFragment : Fragment() {
+
+    private class Measures(
+        val x0: Float,
+        val dx: Float,
+        val y0: Float, val
+        dy: Float,
+    )
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
+    private var measures: Measures? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +60,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.gameLD.observe(viewLifecycleOwner, { game -> onObserveGame(game) })
         viewModel.movesCounterLD.observe(viewLifecycleOwner, { moves -> onObserveMovesCounter(moves) })
         viewModel.secondsCounterLD.observe(viewLifecycleOwner, { seconds -> onObserveSecondsCounter(seconds) })
@@ -63,17 +71,46 @@ class HomeFragment : Fragment() {
         requireActivity().application.save()
     }
 
-    private fun onObserveGame(game: Game) {
-        for (pieceNumber: Int in 1..15) {
-            val position = game.getFieldNumberOf(pieceNumber)
-            if (position > 0) {
-                drawPiece(pieceNumber, position)
-            }
-        }
-        if (game.isSolved) {
-            binding.game.setBackgroundColor(Color.CYAN)
+    override fun onResume() {
+        super.onResume()
+        viewModel.touch()
+    }
+
+    private fun getMeasures(): Measures? {
+        if (binding.board.piece1.x > 0) {
+            return Measures(
+                x0 = binding.board.piece1.x,
+                y0 = binding.board.piece1.y,
+                dx = binding.board.piece2.x - binding.board.piece1.x,
+                dy = binding.board.piece2.y - binding.board.piece2.y,
+            )
         } else {
-            binding.game.setBackgroundColor(Color.TRANSPARENT)
+            return null
+        }
+    }
+
+    private fun onObserveGame(game: Game) {
+
+        if (measures == null)
+            measures = getMeasures()
+
+        measures?.also {
+
+            for (pieceNumber: Int in 1..15) {
+                val fieldNumber = game.getFieldNumberOf(pieceNumber)
+                if (fieldNumber > 0) {
+                    val row = (fieldNumber - 1) / 4
+                    val col = (fieldNumber - 1) % 4
+                    val x = it.x0 + col * it.dx
+                    val y = it.y0 + row * it.dx
+                    drawPiece(pieceNumber, x, y)
+                }
+            }
+            if (game.isSolved) {
+                binding.game.setBackgroundColor(Color.CYAN)
+            } else {
+                binding.game.setBackgroundColor(Color.TRANSPARENT)
+            }
         }
     }
 
@@ -85,43 +122,13 @@ class HomeFragment : Fragment() {
         binding.seconds.text = Helpers.toTimeString(seconds)
     }
 
-    private fun drawPiece(pieceNumber: Int, position: Int) {
-        val frame: FrameLayout = getFrameLayoutForPosition(position)
-        val frameLayoutParams = frame.layoutParams as ConstraintLayout.LayoutParams
-
+    private fun drawPiece(pieceNumber: Int, x: Float, y: Float) {
         val piece = getPiece(pieceNumber)
-        val pieceLayoutParams = piece.layoutParams as ConstraintLayout.LayoutParams
-
-        pieceLayoutParams.bottomToBottom = frameLayoutParams.bottomToBottom
-        pieceLayoutParams.topToTop = frameLayoutParams.topToTop
-        pieceLayoutParams.startToStart = frameLayoutParams.startToStart
-        pieceLayoutParams.endToEnd = frameLayoutParams.endToEnd
-
-        piece.layoutParams = pieceLayoutParams
+        piece.x = x
+        piece.y = y
+        piece.visibility = View.VISIBLE
         piece.setBackgroundColor(piece.getColor(R.color.fieldColor))
         piece.setTextColor(piece.getColor(R.color.fieldTextColor))
-    }
-
-    private fun getFrameLayoutForPosition(position: Int): FrameLayout {
-        return when (position) {
-            1 -> binding.board.field1
-            2 -> binding.board.field2
-            3 -> binding.board.field3
-            4 -> binding.board.field4
-            5 -> binding.board.field5
-            6 -> binding.board.field6
-            7 -> binding.board.field7
-            8 -> binding.board.field8
-            9 -> binding.board.field9
-            10 -> binding.board.field10
-            11 -> binding.board.field11
-            12 -> binding.board.field12
-            13 -> binding.board.field13
-            14 -> binding.board.field14
-            15 -> binding.board.field15
-            16 -> binding.board.field16
-            else -> throw InvalidParameterException()
-        }
     }
 
     private fun getPiece(pieceNumber: Int): TextView {
