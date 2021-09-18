@@ -243,11 +243,10 @@
         app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
-        android:layout_margin="@dimen/piece_margin" android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_1"/>
+        android:layout_margin="@dimen/piece_margin" 
+        android:text="@string/label_1"
+        style="@style/MobiPuzzle.Piece" />
+
 
     <TextView
         android:id="@+id/piece2"
@@ -258,11 +257,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_2"/>
+        android:text="@string/label_2"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece3"
@@ -273,11 +269,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_3"/>
+        android:text="@string/label_3"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece4"
@@ -288,11 +281,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_4"/>
+        android:text="@string/label_4"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece5"
@@ -303,11 +293,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_5"/>
+        android:text="@string/label_5"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece6"
@@ -318,11 +305,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_6"/>
+        android:text="@string/label_6"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece7"
@@ -333,11 +317,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_7"/>
+        android:text="@string/label_7"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece8"
@@ -348,11 +329,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline2"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline3"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_8"/>
+        android:text="@string/label_8"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece9"
@@ -363,11 +341,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_9"/>
+        android:text="@string/label_9"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece10"
@@ -378,11 +353,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_10"/>
+        android:text="@string/label_10"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece11"
@@ -393,11 +365,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_11"/>
+        android:text="@string/label_11"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece12"
@@ -408,11 +377,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline3"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline4"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_12"/>
+        android:text="@string/label_12"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece13"
@@ -423,11 +389,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_13"/>
+        android:text="@string/label_13"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece14"
@@ -438,11 +401,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_14"/>
+        android:text="@string/label_14"
+        style="@style/MobiPuzzle.Piece" />
 
     <TextView
         android:id="@+id/piece15"
@@ -453,11 +413,8 @@
         app:layout_constraintTop_toTopOf="@id/horizontal_guideline4"
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline5"
         android:layout_margin="@dimen/piece_margin"
-        android:background="@color/fieldColor"
-        android:textColor="@color/fieldTextColor"
-        android:textSize="@dimen/piece_text_size"
-        android:gravity="center"
-        android:text="@string/label_15"/>
+        android:text="@string/label_15"
+        style="@style/MobiPuzzle.Piece" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

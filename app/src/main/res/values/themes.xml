@@ -1,24 +1,135 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MobiPuzzle" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
-        <item name="colorOnPrimary">@color/primaryTextColor</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/secondaryDarkColor</item>
-        <item name="colorSecondaryVariant">@color/secondaryLightColor</item>
-        <item name="colorOnSecondary">@color/secondaryTextColor</item>
-        <!-- Status bar color. -->
+    <style name="Theme.MobiPuzzle" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">?attr/myToolbarColor</item>
+        <item name="colorPrimaryVariant">?attr/myStatusBarColor</item>
+        <item name="colorOnPrimary">?attr/myToolbarTextColor</item>
+        <item name="colorSecondary">?attr/myAlternativeColor</item>
+        <item name="colorOnSecondary">?attr/myAlternativeTextColor</item>
+        <item name="colorSurface">?attr/myNavigationBarColor</item>
+        <item name="colorOnBackground">?attr/myMainTextColor</item>
+        <item name="android:background">?attr/myMainColor</item>
+        <item name="android:colorControlNormal">?attr/myControlColor</item>
+        <item name="android:colorControlActivated">?attr/myActiveControlColor</item>
+        <item name="android:colorControlHighlight">?attr/myActiveControlColor</item>
+
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-        <item name="actionBarTheme">@style/AppTheme.AppBarOverlay</item>
-        <item name="android:background">@color/backgroundColor</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="toolbarStyle">@style/MobiPuzzle.Toolbar</item>
+        <item name="bottomNavigationStyle">@style/MobiPuzzle.BottomNavigationView</item>
+        <item name="switchStyle">@style/MobiPuzzle.Switch</item>
+        <item name="radioButtonStyle">@style/MobiPuzzle.RadioButton</item>
     </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:textColorPrimary">@color/primaryTextColor</item>
-        <item name="android:background">@color/primaryColor</item>
+    <style name="Theme.MobiPuzzle.White" parent="Theme.MobiPuzzle">
+        <item name="myStatusBarColor">@color/gray_dark</item>
+        <item name="myToolbarColor">@color/gray_light</item>
+        <item name="myToolbarTextColor">@color/black</item>
+        <item name="myNavigationBarColor">@color/gray_light</item>
+        <item name="myNavigationBarTextColor">@color/black</item>
+        <item name="myMainColor">@color/white</item>
+        <item name="myMainTextColor">@color/black</item>
+        <item name="myAlternativeColor">@color/black</item>
+        <item name="myAlternativeTextColor">@color/white</item>
+        <item name="myControlColor">@color/gray_dark</item>
+        <item name="myActiveControlColor">@color/black</item>
+        <item name="myInactiveControlColor">@color/white</item>
+    </style>
+
+    <style name="Theme.MobiPuzzle.Default" parent="Theme.MobiPuzzle">
+        <item name="myStatusBarColor">@color/defaultStatusBarColor</item>
+        <item name="myToolbarColor">@color/defaultToolbarColor</item>
+        <item name="myToolbarTextColor">@color/defaultToolbarTextColor</item>
+        <item name="myNavigationBarColor">@color/defaultBottomNavigationColor</item>
+        <item name="myNavigationBarTextColor">@color/defaultToolbarTextColor</item>
+        <item name="myMainColor">@color/defaultBackgroundColor</item>
+        <item name="myMainTextColor">@color/defaultTextColor</item>
+        <item name="myAlternativeColor">@color/defaultAlternativeColor</item>
+        <item name="myAlternativeTextColor">@color/defaultAlternativeTextColor</item>
+        <item name="myControlColor">@color/defaultControlColor</item>
+        <item name="myActiveControlColor">@color/defaultActivatedControlColor</item>
+        <item name="myInactiveControlColor">@color/defaultToolbarTextColor</item>
+    </style>
+
+    <style name="Theme.MobiPuzzle.Green" parent="Theme.MobiPuzzle">
+        <item name="myStatusBarColor">@color/greenStatusBarColor</item>
+        <item name="myToolbarColor">@color/greenToolbarColor</item>
+        <item name="myToolbarTextColor">@color/greenToolbarTextColor</item>
+        <item name="myNavigationBarColor">@color/greenBottomNavigationColor</item>
+        <item name="myNavigationBarTextColor">@color/greenTextColor</item>
+        <item name="myMainColor">@color/greenBackgroundColor</item>
+        <item name="myMainTextColor">@color/greenTextColor</item>
+        <item name="myAlternativeColor">@color/greenAlternativeColor</item>
+        <item name="myAlternativeTextColor">@color/greenAlternativeTextColor</item>
+        <item name="myControlColor">@color/greenControlColor</item>
+        <item name="myActiveControlColor">@color/greenControlColor</item>
+        <item name="myInactiveControlColor">@color/greenTextColor</item>
+    </style>
+
+    <style name="Theme.MobiPuzzle.Bordeaux" parent="Theme.MobiPuzzle">
+        <item name="myStatusBarColor">@color/bordeauxStatusBarColor</item>
+        <item name="myToolbarColor">@color/bordeauxToolbarColor</item>
+        <item name="myToolbarTextColor">@color/bordeauxToolbarTextColor</item>
+        <item name="myNavigationBarColor">@color/bordeauxBottomNavigationColor</item>
+        <item name="myNavigationBarTextColor">@color/bordeauxToolbarTextColor</item>
+        <item name="myMainColor">@color/bordeauxBackgroundColor</item>
+        <item name="myMainTextColor">@color/bordeauxTextColor</item>
+        <item name="myAlternativeColor">@color/bordeauxAlternativeColor</item>
+        <item name="myAlternativeTextColor">@color/bordeauxAlternativeTextColor</item>
+        <item name="myControlColor">@color/bordeauxControlColor</item>
+        <item name="myActiveControlColor">@color/bordeauxControlColor</item>
+        <item name="myInactiveControlColor">@color/bordeauxTextColor</item>
+    </style>
+
+    <style name="MobiPuzzle.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.MobiPuzzle.Toolbar</item>
+    </style>
+
+    <style name="ThemeOverlay.MobiPuzzle.Toolbar" parent="">
+        <item name="android:background">?attr/myToolbarColor</item>
+        <item name="android:colorControlNormal">?attr/myToolbarTextColor</item>
+    </style>
+
+    <style name="MobiPuzzle.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.MobiPuzzle.BottomNavigationView</item>
+    </style>
+
+    <style name="ThemeOverlay.MobiPuzzle.BottomNavigationView" parent="">
+        <item name="colorOnPrimary">?attr/myNavigationBarTextColor</item>
+        <item name="android:background">?attr/myNavigationBarColor</item>
+    </style>
+
+    <style name="MobiPuzzle.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="android:textColor">?attr/myMainTextColor</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.MobiPuzzle.Switch</item>
+    </style>
+
+    <style name="MobiPuzzle.RadioButton" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
+        <item name="android:textColor">?attr/myMainTextColor</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.MobiPuzzle.RadioButton</item>
+    </style>
+
+    <style name="MobiPuzzle.Piece" parent="Widget.MaterialComponents.TextView">
+        <item name="android:background">?attr/myAlternativeColor</item>
+        <item name="android:textColor">?attr/myAlternativeTextColor</item>
+        <item name="android:textSize">@dimen/piece_text_size</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ThemeOverlay.MobiPuzzle.RadioButton" parent="">
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorSurface">?attr/myControlColor</item><!-- unchecked -->
+        <item name="colorOnSurface">?attr/myControlColor</item><!-- unchecked -->
+        <item name="colorSecondary">?attr/myControlColor</item><!-- checked -->
+        <item name="colorOnSecondary">@color/pink</item>
+    </style>
+
+    <style name="ThemeOverlay.MobiPuzzle.Switch" parent="">
+        <item name="colorPrimary">@color/pink</item>
+        <item name="colorSurface">?attr/myInactiveControlColor</item><!-- unchecked: foreground -->
+        <item name="colorOnSurface">?attr/myControlColor</item><!-- unchecked: background -->
+        <item name="colorSecondary">?attr/myActiveControlColor</item><!-- checked foreground and background -->
+        <item name="colorOnSecondary">@color/pink</item>
     </style>
 
 </resources>

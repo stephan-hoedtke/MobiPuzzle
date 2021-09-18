@@ -4,7 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.stho.mobipuzzle.Game
+import com.stho.mobipuzzle.R
+import com.stho.mobipuzzle.Status
 import com.stho.mobipuzzle.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
@@ -25,10 +29,24 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.headlineLD.observe(viewLifecycleOwner, { headline -> onObserveHeadline(headline) })
+        viewModel.gameLD.observe(viewLifecycleOwner, { game -> onObserveGame(game) })
+        updateActionBar()
     }
 
     private fun onObserveHeadline(headline: String) {
         binding.headline.text = headline
     }
 
+    private fun onObserveGame(game: Game) {
+        // nothing
+    }
+
+    private fun updateActionBar() {
+        val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
+        actionBar?.also {
+            it.title = getString(R.string.title_dashboard)
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setHomeButtonEnabled(true)
+        }
+    }
 }

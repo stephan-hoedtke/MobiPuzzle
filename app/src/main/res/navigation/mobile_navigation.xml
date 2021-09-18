@@ -9,12 +9,34 @@
         android:id="@+id/navigation_home"
         android:name="com.stho.mobipuzzle.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_congratulation"
+            app:destination="@id/navigation_congratulation" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.stho.mobipuzzle.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.stho.mobipuzzle.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings"/>
+
+    <fragment
+        android:id="@+id/navigation_congratulation"
+        android:name="com.stho.mobipuzzle.ui.congratulation.CongratulationFragment"
+        android:label="@string/title_congratulation"
+        tools:layout="@layout/fragment_congratulation" >
+    </fragment>
+
+    <action
+        android:id="@+id/actionHomeFragment"
+        app:destination="@id/navigation_home" />
+
 
 </navigation>

@@ -3,14 +3,21 @@ package com.stho.mobipuzzle.ui.home
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.stho.mobipuzzle.*
 import com.stho.mobipuzzle.databinding.FragmentHomeBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.security.InvalidParameterException
 
 
@@ -26,6 +33,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
+    private val fieldTexts: HashMap<Int, String> = HashMap<Int, String>().also { it.initialize(Mode.NUMBERS) }
+    private val handler = Handler(Looper.getMainLooper())
     private var measures: Measures? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +62,7 @@ class HomeFragment : Fragment() {
         binding.board.piece14.setOnTouchListener(MyTouchListener(14, viewModel, binding))
         binding.board.piece15.setOnTouchListener(MyTouchListener(15, viewModel, binding))
 
-        binding.buttonNewGame.setOnClickListener { viewModel.startNew() }
+        binding.buttonNewGame.setOnClickListener { viewModel.startNewGame() }
 
         return binding.root
     }
@@ -62,18 +71,24 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.gameLD.observe(viewLifecycleOwner, { game -> onObserveGame(game) })
+        viewModel.settingsLD.observe(viewLifecycleOwner, { settings -> onObserveSettings(settings) })
         viewModel.movesCounterLD.observe(viewLifecycleOwner, { moves -> onObserveMovesCounter(moves) })
         viewModel.secondsCounterLD.observe(viewLifecycleOwner, { seconds -> onObserveSecondsCounter(seconds) })
+        viewModel.summaryLD.observe(viewLifecycleOwner, { summary -> onObserveSummary(summary) })
+
+        updateActionBar()
     }
 
     override fun onPause() {
         super.onPause()
-        requireActivity().application.save()
+        requireActivity().application.saveRepository()
+        stopSecondsCounter()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.touch()
+        viewModel.touchGame()
+        startSecondsCounter()
     }
 
     private fun getMeasures(): Measures? {
@@ -106,12 +121,21 @@ class HomeFragment : Fragment() {
                     drawPiece(pieceNumber, x, y)
                 }
             }
+
             if (game.isSolved) {
                 binding.game.setBackgroundColor(Color.CYAN)
             } else {
                 binding.game.setBackgroundColor(Color.TRANSPARENT)
             }
+
+            if (game.status == Status.FINISHED) {
+                showCongratulation()
+            }
         }
+    }
+
+    private fun onObserveSettings(settings: Settings) {
+        fieldTexts.initialize(settings.mode)
     }
 
     private fun onObserveMovesCounter(moves: Int) {
@@ -122,13 +146,28 @@ class HomeFragment : Fragment() {
         binding.seconds.text = Helpers.toTimeString(seconds)
     }
 
+    private fun onObserveSummary(summary: Summary) {
+        // Nothing...
+    }
+
+    private fun showCongratulation() {
+        if (viewModel.showCongratulation) {
+            navController.navigate(HomeFragmentDirections.actionNavigationHomeToNavigationCongratulation())
+        } else {
+            viewModel.setStatusCongratulated()
+        }
+    }
+
+    private val navController: NavController
+        get() = Navigation.findNavController(binding.root)
+
     private fun drawPiece(pieceNumber: Int, x: Float, y: Float) {
         val piece = getPiece(pieceNumber)
         piece.x = x
         piece.y = y
+        piece.text = fieldTexts[pieceNumber]
         piece.visibility = View.VISIBLE
-        piece.setBackgroundColor(piece.getColor(R.color.fieldColor))
-        piece.setTextColor(piece.getColor(R.color.fieldTextColor))
+        piece.alpha = 1f
     }
 
     private fun getPiece(pieceNumber: Int): TextView {
@@ -149,6 +188,56 @@ class HomeFragment : Fragment() {
             14 -> binding.board.piece14
             15 -> binding.board.piece15
             else -> throw InvalidParameterException()
+        }
+    }
+
+    private fun startSecondsCounter() {
+        val runnableCode: Runnable = object : Runnable {
+            override fun run() {
+                CoroutineScope(Dispatchers.Default).launch {
+                    viewModel.countSeconds()
+                }
+                handler.postDelayed(this, 1000)
+            }
+        }
+        handler.postDelayed(runnableCode, 200)
+    }
+
+    private fun stopSecondsCounter() {
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    private fun updateActionBar() {
+        val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
+        actionBar?.also {
+            it.title = getString(R.string.title_home)
+            it.setDisplayHomeAsUpEnabled(false)
+            it.setHomeButtonEnabled(true)
+        }
+    }
+}
+
+fun HashMap<Int, String>.initialize(mode: Mode) {
+    when (mode) {
+        Mode.NUMBERS -> {
+            for (i in 1..15) this[i] = i.toString()
+        }
+        Mode.TEXT -> {
+            this[1] = "O"
+            this[2] = "h"
+            this[3] = "n"
+            this[4] = "e"
+            this[5] = "F"
+            this[6] = "l"
+            this[7] = "ei"
+            this[8] = "ss"
+            this[9] = "k"
+            this[10] = "e"
+            this[11] = "i"
+            this[12] = "n"
+            this[13] = "Pr"
+            this[14] = "ei"
+            this[15] = "s"
         }
     }
 }

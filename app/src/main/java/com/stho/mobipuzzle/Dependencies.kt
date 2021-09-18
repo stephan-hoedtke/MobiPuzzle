@@ -8,9 +8,10 @@ fun Application.getRepository(): Repository {
     return Repository.getInstance(persister)
 }
 
-fun Application.save() {
+fun Application.saveRepository() {
     val persister: IPersister = Persister(this.applicationContext)
     val repository = Repository.getInstance(persister)
     persister.save(repository)
 }
+
 

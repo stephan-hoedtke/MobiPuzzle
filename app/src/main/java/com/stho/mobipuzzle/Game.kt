@@ -11,6 +11,19 @@ class Game {
 
     private val array: Array<Int> = arrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0)
 
+    var status: Status = Status.NONE
+        private set
+
+    val isAlive: Boolean
+        get() = (status == Status.ALIVE)
+
+    val isSolved: Boolean
+        get() = (status == Status.FINISHED || status == Status.CONGRATULATED)
+
+    fun setStatusCongratulated() {
+        status = Status.CONGRATULATED
+    }
+
     private operator fun get(fieldNumber: Int): Int {
         return array[fieldNumber - 1]
     }
@@ -20,6 +33,9 @@ class Game {
     }
 
     fun canMoveTo(fromFieldNumber: Int, toFieldNumber: Int): Boolean {
+        if (!canMove) {
+            return false
+        }
         if (isNextTo(fromFieldNumber, toFieldNumber)) {
             if (isEmpty(toFieldNumber)) {
                 return true
@@ -38,13 +54,25 @@ class Game {
         set(fieldNumber, 0)
     }
 
-    fun moveTo(fromFieldNumber: Int, toFieldNumber: Int) {
-        if (!isEmpty(toFieldNumber)) {
-            moveTo(toFieldNumber, toFieldNumber + (toFieldNumber - fromFieldNumber))
+    fun moveTo(fromFieldNumber: Int, toFieldNumber: Int): Boolean {
+        if (!canMove) {
+            return false
         }
-        val x = get(fromFieldNumber)
-        set(toFieldNumber, x)
+        moveToRecursive(fromFieldNumber, toFieldNumber)
         setEmpty(fromFieldNumber)
+        status = if (isSorted()) Status.FINISHED else Status.ALIVE
+        return true
+    }
+
+    private val canMove: Boolean
+        get() = (status == Status.NEW || status == Status.ALIVE)
+
+    private fun moveToRecursive(fromFieldNumber: Int, toFieldNumber: Int) {
+        if (!isEmpty(toFieldNumber)) {
+            moveToRecursive(toFieldNumber, toFieldNumber + (toFieldNumber - fromFieldNumber))
+        }
+        val value = get(fromFieldNumber)
+        set(toFieldNumber, value)
     }
 
     enum class Direction {
@@ -100,6 +128,7 @@ class Game {
         initialize()
         val i = getIndexOf(0)
         move(n, i)
+        status = Status.NEW
         return this
     }
 
@@ -134,15 +163,14 @@ class Game {
         }
     }
 
-    val isSolved: Boolean
-        get() {
-            for (i: Int in 0..14) {
-                if (array[i] != i + 1) {
-                    return false
-                }
+    private fun isSorted(): Boolean {
+        for (i: Int in 0..14) {
+            if (array[i] != i + 1) {
+                return false
             }
-            return true
         }
+        return true
+    }
 
     /**
      * Returns the fieldNumber in the range of 1..16 where the piece is found, or 0 otherwise

@@ -1,8 +1,6 @@
 package com.stho.mobipuzzle
 
-import android.content.ClipData
 import android.view.View
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 
 class Helpers {
@@ -10,22 +8,14 @@ class Helpers {
         fun toTimeString(seconds: Long): String {
             val minutes = seconds / 60
             val remainingSeconds = seconds - (60 * minutes)
-            return String.format("%02d:%02d", minutes, remainingSeconds)
-        }
-
-        fun createClipData(pieceNumber: Int): ClipData {
-            return ClipData.newPlainText(PIECE, pieceNumber.toString())
-        }
-
-        fun getPieceNumber(piece: TextView): Int {
-            return try {
-                piece.text.toString().toInt()
-            } catch (ex: Exception) {
-                0
+            return if (minutes > 60) {
+                val hours = seconds / 60
+                val remainingMinutes = minutes - (60 * hours)
+                String.format("%02d:%02d:%02d", hours, remainingMinutes, remainingSeconds)
+            } else {
+                String.format("%02d:%02d", minutes, remainingSeconds)
             }
         }
-
-        private const val PIECE = "PIECE"
     }
 }
 

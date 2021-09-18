@@ -1,15 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primaryColor">#f48406</color>
-    <color name="primaryLightColor">#ffd304</color>
-    <color name="primaryDarkColor">#a43901  </color>
-    <color name="secondaryColor">#114411</color>
-    <color name="secondaryLightColor">#225522</color>
-    <color name="secondaryDarkColor">#002200</color>
-    <color name="primaryTextColor">#003300</color>
-    <color name="secondaryTextColor">#ffF9E2</color>
-    <color name="backgroundColor">#002d00</color>
-    <color name="fieldColor">#a42700</color>
-    <color name="fieldTextColor">#ffF9E2</color>
-    <color name="fieldAccentColor">#841700</color>
+    <color name="defaultStatusBarColor">#00251a</color>
+    <color name="defaultToolbarColor">#004d40</color>
+    <color name="defaultToolbarTextColor">#ffffff</color>
+    <color name="defaultControlColor">#39796b</color>
+    <color name="defaultActivatedControlColor">#880e4f</color>
+    <color name="defaultBottomNavigationColor">#bc477b</color>
+    <color name="defaultAlternativeColor">#560027</color>
+    <color name="defaultAlternativeTextColor">#ffffff</color>
+    <color name="defaultBackgroundColor">#B0B0B0</color>
+    <color name="defaultTextColor">#00251a</color>
+
+    <color name="greenStatusBarColor">#a43901</color>
+    <color name="greenToolbarColor">#f48406</color>
+    <color name="greenToolbarTextColor">#003300</color>
+    <color name="greenControlColor">#f48406</color>
+    <color name="greenActivatedControlColor">#ffd304</color>
+    <color name="greenBottomNavigationColor">#002200</color>
+    <color name="greenAlternativeColor">#225522</color>
+    <color name="greenAlternativeTextColor">#ffF9E2</color>
+    <color name="greenBackgroundColor">#002d00</color>
+    <color name="greenTextColor">#ffF9E2</color>
+
+    <color name="bordeauxStatusBarColor">#440000</color>
+    <color name="bordeauxToolbarColor">#720000</color>
+    <color name="bordeauxToolbarTextColor">#ffF9E2</color>
+    <color name="bordeauxControlColor">#973a2a</color>
+    <color name="bordeauxActivatedControlColor">#C73a2a</color>
+    <color name="bordeauxBottomNavigationColor">#440000</color>
+    <color name="bordeauxAlternativeColor">#880000</color>
+    <color name="bordeauxAlternativeTextColor">#ffF9E2</color>
+    <color name="bordeauxBackgroundColor">#520000</color>
+    <color name="bordeauxTextColor">#ffF9E2</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray_dark">#888888</color>
+    <color name="gray_light">#AAAAAA</color>
+    <color name="green_light">#00CC00</color>
+    <color name="green_dark">#009900</color>
+    <color name="blue_light">#0000CC</color>
+    <color name="blue_dark">#000099</color>
+    <color name="red_light">#CC0000</color>
+    <color name="red_dark">#990000</color>
+    <color name="lime_light">#CCCC00</color>
+    <color name="lime_dark">#999900</color>
+    <color name="orange_light">#F48406</color>
+    <color name="orange_dark">#C47406</color>
+    <color name="yellow_light">#FFF9E2</color>
+    <color name="yellow_dark">#FFD304</color>
+    <color name="pink">#BC47AB</color>
+
 </resources>

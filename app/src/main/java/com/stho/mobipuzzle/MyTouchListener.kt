@@ -1,21 +1,13 @@
 package com.stho.mobipuzzle
 
-import android.animation.Animator
-import android.animation.Animator.AnimatorListener
 import android.annotation.SuppressLint
-import android.graphics.Point
-import android.opengl.Visibility
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
-import androidx.core.os.persistableBundleOf
-import androidx.dynamicanimation.animation.DynamicAnimation
 import com.stho.mobipuzzle.databinding.FragmentHomeBinding
-import com.stho.mobipuzzle.ui.home.HomeFragment
 import com.stho.mobipuzzle.ui.home.HomeViewModel
-import org.w3c.dom.Text
 import java.security.InvalidParameterException
 
 
@@ -58,7 +50,7 @@ class MyTouchListener(private val pieceNumber: Int, private val viewModel: HomeV
                     moveDragViews(motionEvent, it)
                 }
                 move = null
-                viewModel.touch()
+                viewModel.touchGame()
                 true
             }
             else -> {
@@ -75,7 +67,7 @@ class MyTouchListener(private val pieceNumber: Int, private val viewModel: HomeV
             val pieceNumber = game.getPieceNumberOf(fieldNumber)
             val piece: TextView = getPiece(pieceNumber)
             pieceStartPositions[pieceNumber] = Position(piece.x, piece.y)
-            piece.setBackgroundColor(piece.getColor(R.color.fieldAccentColor))
+            piece.alpha = 0.8f
             piece.invalidate()
         }
     }
@@ -130,7 +122,7 @@ class MyTouchListener(private val pieceNumber: Int, private val viewModel: HomeV
             piece.y = position.y
             piece.visibility = View.INVISIBLE
         }
-        viewModel.touch()
+        viewModel.touchGame()
 //            if (piece.x != position.x || piece.y != position.y)
 //                piece.animate()
 //                    .setDuration(DURATION)
@@ -175,7 +167,7 @@ class MyTouchListener(private val pieceNumber: Int, private val viewModel: HomeV
             piece.x = targetPosition.x
             piece.y = targetPosition.y
         }
-        viewModel.touch()
+        viewModel.touchGame()
 //
 //            if (piece.x != targetPosition.x || piece.y != targetPosition.y) {
 //                val animator = piece.animate()

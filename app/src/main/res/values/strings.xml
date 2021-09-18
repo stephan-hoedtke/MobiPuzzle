@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">Mobile Puzzle</string>
+
     <string name="title_home">Mobile Puzzle</string>
     <string name="title_dashboard">Dashboard</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_congratulation">Congratulation</string>
+
     <string name="label_new_game">New Game</string>
     <string name="label_15">15</string>
     <string name="label_14">14</string>
@@ -18,17 +22,37 @@
     <string name="label_3">3</string>
     <string name="label_2">2</string>
     <string name="label_1">1</string>
+
     <string name="default_time">45:30</string>
     <string name="default_moves">Moves: 23</string>
     <string name="default_headline">Headline</string>
+
     <plurals name="label_moves_plurals">
         <item quantity="zero">no moves</item>
         <item quantity="one">1 move</item>
         <item quantity="other">%d moves</item>
     </plurals>
+
     <plurals name="label_headline_plurals">
         <item quantity="zero">no points in no games</item>
         <item quantity="one">%.1f points in one game</item>
         <item quantity="other">%.1f points in %d games</item>
     </plurals>
+
+    <string name="label_summary_params">%d moves in %s</string>
+
+    <!-- Preferences -->
+    <string name="appearance_header">Appearance</string>
+    <string name="appearance_mode_title">Mode</string>
+    <string name="appearance_theme_title">Theme</string>
+    <string name="behavior_header">Behavior</string>
+    <string name="behavior_congratulations_title">Show congratulation</string>
+    <string name="label_congratulation">Congratulation</string>
+    <string name="label_default">Default</string>
+    <string name="label_green">Green</string>
+    <string name="label_bordeaux">Bordeaux</string>
+    <string name="label_numbers">Numbers</string>
+    <string name="label_text">Text</string>
+    <string name="label_white">White</string>
+
 </resources>

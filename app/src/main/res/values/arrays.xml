@@ -1,0 +1,25 @@
+<resources>
+    <!-- Appearance Preference -->
+    <string-array name="mode_entries">
+        <item>Numbers</item>
+        <item>Text</item>
+    </string-array>
+
+    <string-array name="mode_values">
+        <item>NUMBERS</item>
+        <item>TEXT</item>
+    </string-array>
+
+    <string-array name="themes_entries">
+        <item>Default</item>
+        <item>Green</item>
+        <item>Bordeaux</item>
+    </string-array>
+
+    <string-array name="themes_values">
+        <item>DEFAULT</item>
+        <item>GREEN</item>
+        <item>BORDEAUX</item>
+    </string-array>
+
+</resources>
