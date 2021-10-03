@@ -15,11 +15,17 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.stho.mobipuzzle.*
 import com.stho.mobipuzzle.databinding.FragmentHomeBinding
+import com.stho.mobipuzzle.game.MyAction
+import com.stho.mobipuzzle.game.MyGame
+import com.stho.mobipuzzle.game.Status
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.security.InvalidParameterException
 
+import com.google.android.material.color.MaterialColors
+import com.stho.mobipuzzle.mcts.MCTS
+import java.text.DecimalFormat
 
 
 class HomeFragment : Fragment() {
@@ -33,9 +39,9 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
-    private val fieldTexts: HashMap<Int, String> = HashMap<Int, String>().also { it.initialize(Mode.NUMBERS) }
     private val handler = Handler(Looper.getMainLooper())
     private var measures: Measures? = null
+    private val decimalFormat = DecimalFormat("0.0000")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +69,7 @@ class HomeFragment : Fragment() {
         binding.board.piece15.setOnTouchListener(MyTouchListener(15, viewModel, binding))
 
         binding.buttonNewGame.setOnClickListener { viewModel.startNewGame() }
-
+        binding.buttonBestMove.setOnClickListener { startEngine() }
         return binding.root
     }
 
@@ -75,8 +81,19 @@ class HomeFragment : Fragment() {
         viewModel.movesCounterLD.observe(viewLifecycleOwner, { moves -> onObserveMovesCounter(moves) })
         viewModel.secondsCounterLD.observe(viewLifecycleOwner, { seconds -> onObserveSecondsCounter(seconds) })
         viewModel.summaryLD.observe(viewLifecycleOwner, { summary -> onObserveSummary(summary) })
+        viewModel.bestActionLD.observe(viewLifecycleOwner, { action -> onObserveBestAction(action) })
+        viewModel.isAnalyserRunningLD.observe(viewLifecycleOwner, { isRunning -> onObserveIsAnalyserRunning(isRunning) })
 
         updateActionBar()
+
+        binding.root.viewTreeObserver.addOnGlobalLayoutListener { onObserverLayout() }
+    }
+
+    private fun onObserverLayout() {
+        if (measures == null) {
+            measures = getScreenMeasures()
+            viewModel.touchGame()
+        }
     }
 
     override fun onPause() {
@@ -87,11 +104,17 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.touchGame()
         startSecondsCounter()
     }
 
-    private fun getMeasures(): Measures? {
+    /**
+     * For some reasons these measure are not available after onResume() when the fragment is started first.
+     */
+    private fun getScreenMeasures(): Measures? {
+        val x = requireView().findViewById<TextView>(R.id.piece1)
+        if (x.x == 0f)
+            x.invalidate()
+
         if (binding.board.piece1.x > 0) {
             return Measures(
                 x0 = binding.board.piece1.x,
@@ -104,10 +127,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun onObserveGame(game: Game) {
-
-        if (measures == null)
-            measures = getMeasures()
+    private fun onObserveGame(game: MyGame) {
 
         measures?.also {
 
@@ -118,7 +138,7 @@ class HomeFragment : Fragment() {
                     val col = (fieldNumber - 1) % 4
                     val x = it.x0 + col * it.dx
                     val y = it.y0 + row * it.dx
-                    drawPiece(pieceNumber, x, y)
+                    drawPiece(game, pieceNumber, x, y)
                 }
             }
 
@@ -131,11 +151,13 @@ class HomeFragment : Fragment() {
             if (game.status == Status.FINISHED) {
                 showCongratulation()
             }
+
+            binding.evaluationInfo.text = decimalFormat.format(game.gameState.evaluate())
         }
     }
 
     private fun onObserveSettings(settings: Settings) {
-        fieldTexts.initialize(settings.mode)
+        viewModel.touchGame()
     }
 
     private fun onObserveMovesCounter(moves: Int) {
@@ -150,6 +172,47 @@ class HomeFragment : Fragment() {
         // Nothing...
     }
 
+    private fun onObserveBestAction(info: MCTS.BestActionInfo?) {
+        info?.also {
+            onObserveBestAction(it.action as MyAction)
+            binding.bestMoveInfo.text = getString(R.string.best_move_info_params , it.depth, decimalFormat.format(it.reward))
+        }
+    }
+
+    private fun onObserveBestAction(action: MyAction) {
+        val fromFieldNumber = action.fromFieldNumber
+        val pieceNumber = viewModel.game.getPieceNumberOf(fromFieldNumber)
+        onObserveBestAction(pieceNumber)
+    }
+
+    private fun onObserveBestAction(pieceNumber: Int) {
+        val normalColor = normalBackgroundColor
+        val selectedColor = Color.RED
+        binding.board.piece1.setBackgroundColor(if (pieceNumber == 1) selectedColor else normalColor)
+        binding.board.piece2.setBackgroundColor(if (pieceNumber == 2) selectedColor else normalColor)
+        binding.board.piece3.setBackgroundColor(if (pieceNumber == 3) selectedColor else normalColor)
+        binding.board.piece4.setBackgroundColor(if (pieceNumber == 4) selectedColor else normalColor)
+        binding.board.piece5.setBackgroundColor(if (pieceNumber == 5) selectedColor else normalColor)
+        binding.board.piece6.setBackgroundColor(if (pieceNumber == 6) selectedColor else normalColor)
+        binding.board.piece7.setBackgroundColor(if (pieceNumber == 7) selectedColor else normalColor)
+        binding.board.piece8.setBackgroundColor(if (pieceNumber == 8) selectedColor else normalColor)
+        binding.board.piece9.setBackgroundColor(if (pieceNumber == 9) selectedColor else normalColor)
+        binding.board.piece10.setBackgroundColor(if (pieceNumber == 10) selectedColor else normalColor)
+        binding.board.piece11.setBackgroundColor(if (pieceNumber == 11) selectedColor else normalColor)
+        binding.board.piece12.setBackgroundColor(if (pieceNumber == 12) selectedColor else normalColor)
+        binding.board.piece13.setBackgroundColor(if (pieceNumber == 13) selectedColor else normalColor)
+        binding.board.piece14.setBackgroundColor(if (pieceNumber == 14) selectedColor else normalColor)
+        binding.board.piece15.setBackgroundColor(if (pieceNumber == 15) selectedColor else normalColor)
+    }
+
+    private fun onObserveIsAnalyserRunning(isRunning: Boolean) {
+        val resId = if (isRunning) R.drawable.red_bulb_pressable else R.drawable.green_bulb_pressable
+        binding.buttonBestMove.setImageResource(resId)
+    }
+
+    private val normalBackgroundColor: Int
+        get() = MaterialColors.getColor(requireContext(), R.attr.colorSecondary, Color.RED)
+
     private fun showCongratulation() {
         if (viewModel.showCongratulation) {
             navController.navigate(HomeFragmentDirections.actionNavigationHomeToNavigationCongratulation())
@@ -161,11 +224,11 @@ class HomeFragment : Fragment() {
     private val navController: NavController
         get() = Navigation.findNavController(binding.root)
 
-    private fun drawPiece(pieceNumber: Int, x: Float, y: Float) {
+    private fun drawPiece(game: MyGame, pieceNumber: Int, x: Float, y: Float) {
         val piece = getPiece(pieceNumber)
         piece.x = x
         piece.y = y
-        piece.text = fieldTexts[pieceNumber]
+        piece.text = game.getPieceValue(pieceNumber)
         piece.visibility = View.VISIBLE
         piece.alpha = 1f
     }
@@ -215,29 +278,8 @@ class HomeFragment : Fragment() {
             it.setHomeButtonEnabled(true)
         }
     }
-}
 
-fun HashMap<Int, String>.initialize(mode: Mode) {
-    when (mode) {
-        Mode.NUMBERS -> {
-            for (i in 1..15) this[i] = i.toString()
-        }
-        Mode.TEXT -> {
-            this[1] = "O"
-            this[2] = "h"
-            this[3] = "n"
-            this[4] = "e"
-            this[5] = "F"
-            this[6] = "l"
-            this[7] = "ei"
-            this[8] = "ss"
-            this[9] = "k"
-            this[10] = "e"
-            this[11] = "i"
-            this[12] = "n"
-            this[13] = "Pr"
-            this[14] = "ei"
-            this[15] = "s"
-        }
+    private fun startEngine() {
+        viewModel.toggleAnalyser()
     }
 }

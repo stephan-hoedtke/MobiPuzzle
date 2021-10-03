@@ -4,7 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.stho.mobipuzzle.ui.home.HomeViewModel
+import com.stho.mobipuzzle.game.MyGame
+import com.stho.mobipuzzle.game.Status
 
 class Repository(games: Int, ratingPoints: Double, settings: Settings) {
 
@@ -26,7 +27,7 @@ class Repository(games: Int, ratingPoints: Double, settings: Settings) {
         }
     }
 
-    private val gameLiveData = MutableLiveData<Game>().apply { value = Game() }
+    private val gameLiveData = MutableLiveData<MyGame>().apply { value = MyGame() }
     private val repositoryLiveData: MutableLiveData<Data> = MutableLiveData<Data>().apply { value = Data(games, ratingPoints) }
     private val movesCounterLiveData = MutableLiveData<Int>().apply { value = 0 }
     private val secondsCounterLiveData = MutableLiveData<Long>().apply { value = 0 }
@@ -37,14 +38,14 @@ class Repository(games: Int, ratingPoints: Double, settings: Settings) {
     val repositoryLD: LiveData<IData>
         get() = Transformations.map(repositoryLiveData) { data -> data }
 
-    val gameLD: LiveData<Game> = gameLiveData
+    val gameLD: LiveData<MyGame> = gameLiveData
     val settingsLD: LiveData<Settings> = settingsLiveData
     val summaryLD: LiveData<Summary> = summaryLiveData
     val movesCounterLD: LiveData<Int> = movesCounterLiveData
     val secondsCounterLD: LiveData<Long> = secondsCounterLiveData
 
-    val game: Game
-        get() = gameLiveData.value ?: Game()
+    val game: MyGame
+        get() = gameLiveData.value ?: MyGame()
 
     val games: Int
         get() = repositoryLiveData.value?.games ?: 0
@@ -81,11 +82,6 @@ class Repository(games: Int, ratingPoints: Double, settings: Settings) {
         settingsLiveData.postValue(settings)
     }
 
-    fun movePieceTo(pieceNumber: Int, fieldNumber: Int): Boolean {
-        val fromFieldNumber = game.getFieldNumberOf(pieceNumber)
-        return movePieceFromTo(pieceNumber, fromFieldNumber, fieldNumber)
-    }
-
     fun startNewGame() {
         if (game.isAlive) {
             registerGame(movesCounterLD.value ?: 0, secondsCounterLD.value ?: 0L, false)
@@ -101,30 +97,25 @@ class Repository(games: Int, ratingPoints: Double, settings: Settings) {
         touchGame()
     }
 
-    private fun movePieceFromTo(pieceNumber: Int, fromFieldNumber: Int, toFieldNumber: Int): Boolean =
+    fun movePieceFromTo(fromFieldNumber: Int, toFieldNumber: Int) {
         if (canMoveFromTo(fromFieldNumber, toFieldNumber)) {
-            Log.d("MOVE", "Moving of $pieceNumber from $fromFieldNumber to $toFieldNumber ...")
             moveFromTo(fromFieldNumber, toFieldNumber)
-            true
-        } else {
-            Log.d("MOVE", "Cannot move $pieceNumber from $fromFieldNumber to $toFieldNumber")
-            false
         }
+    }
 
     private fun canMoveFromTo(fromFieldNumber: Int, toFieldNumber: Int): Boolean =
         game.canMoveTo(fromFieldNumber, toFieldNumber)
 
 
     private fun moveFromTo(fromFieldNumber: Int, toFieldNumber: Int) {
-        if (game.moveTo(fromFieldNumber, toFieldNumber)) {
-            countMove()
-            gameLiveData.postValue(game)
-            if (game.status == Status.FINISHED) {
-                val moves = movesCounterLD.value ?: 0
-                val seconds = secondsCounterLD.value ?: 0L
-                registerGame(moves, seconds, true)
-                summaryLiveData.postValue(Summary(moves, seconds, true))
-            }
+        game.moveTo(fromFieldNumber, toFieldNumber)
+        countMove()
+        gameLiveData.postValue(game)
+        if (game.status == Status.FINISHED) {
+            val moves = movesCounterLD.value ?: 0
+            val seconds = secondsCounterLD.value ?: 0L
+            registerGame(moves, seconds, true)
+            summaryLiveData.postValue(Summary(moves, seconds, true))
         }
     }
 

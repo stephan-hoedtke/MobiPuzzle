@@ -13,6 +13,7 @@ import androidx.navigation.Navigation
 import com.stho.mobipuzzle.*
 import com.stho.mobipuzzle.databinding.FragmentCongratulationBinding
 import com.stho.mobipuzzle.databinding.FragmentDashboardBinding
+import com.stho.mobipuzzle.game.MyGame
 import com.stho.mobipuzzle.ui.dashboard.DashboardViewModel
 import com.stho.mobipuzzle.ui.home.HomeFragmentDirections
 import java.lang.Exception
@@ -64,7 +65,7 @@ class CongratulationFragment : Fragment() {
         // TODO: display texts...
     }
 
-    private fun onObserveGame(game: Game) {
+    private fun onObserveGame(game: MyGame) {
         // TODO...
     }
 

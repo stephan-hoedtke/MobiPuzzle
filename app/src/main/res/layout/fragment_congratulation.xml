@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     tools:context=".ui.congratulation.CongratulationFragment">
 
     <androidx.constraintlayout.widget.Guideline
@@ -44,7 +45,7 @@
         android:contentDescription="@string/label_congratulation" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_new_game"
+        android:id="@+id/buttonNewGame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="40dp"

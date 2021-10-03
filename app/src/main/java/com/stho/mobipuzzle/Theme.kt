@@ -2,19 +2,18 @@ package com.stho.mobipuzzle
 
 import java.lang.Exception
 
-enum class Theme(name: String) {
-    DEFAULT("Default"),
+enum class Theme(private val text: String) {
     WHITE("White"),
     GREEN("Green"),
     BORDEAUX("Bordeaux");
 
     override fun toString(): String {
-        return name
+        return text
     }
 
     companion object {
 
-        private val defaultValue: Theme = Theme.DEFAULT
+        private val defaultValue: Theme = Theme.WHITE
 
         fun parseTheme(colorString: String?, defaultValue: Theme = Theme.defaultValue): Theme {
             colorString?.also {

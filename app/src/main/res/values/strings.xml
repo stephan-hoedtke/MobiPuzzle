@@ -54,5 +54,8 @@
     <string name="label_numbers">Numbers</string>
     <string name="label_text">Text</string>
     <string name="label_white">White</string>
+    <string name="label_test_layout">Test Layout</string>
+    <string name="default_best_move" />
+    <string name="best_move_info_params">"%d: %s"</string>
 
 </resources>

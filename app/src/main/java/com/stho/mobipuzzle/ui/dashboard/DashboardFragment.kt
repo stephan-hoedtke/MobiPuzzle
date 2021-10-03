@@ -6,10 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.stho.mobipuzzle.Game
 import com.stho.mobipuzzle.R
-import com.stho.mobipuzzle.Status
 import com.stho.mobipuzzle.databinding.FragmentDashboardBinding
+import com.stho.mobipuzzle.game.MyGame
 
 class DashboardFragment : Fragment() {
 
@@ -37,7 +36,7 @@ class DashboardFragment : Fragment() {
         binding.headline.text = headline
     }
 
-    private fun onObserveGame(game: Game) {
+    private fun onObserveGame(game: MyGame) {
         // nothing
     }
 

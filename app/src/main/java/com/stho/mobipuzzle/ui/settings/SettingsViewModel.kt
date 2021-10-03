@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
 import com.stho.mobipuzzle.*
+import com.stho.mobipuzzle.game.Mode
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -15,6 +16,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     fun setMode(mode: Mode) {
         repository.settings.mode = mode
+        repository.game.mode = mode
         repository.touchSettings()
     }
 

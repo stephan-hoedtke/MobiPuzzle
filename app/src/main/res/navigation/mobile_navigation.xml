@@ -25,7 +25,11 @@
         android:id="@+id/navigation_settings"
         android:name="com.stho.mobipuzzle.ui.settings.SettingsFragment"
         android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings"/>
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_navigation_settings_to_navigation_congratulation"
+            app:destination="@id/navigation_congratulation" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_congratulation"

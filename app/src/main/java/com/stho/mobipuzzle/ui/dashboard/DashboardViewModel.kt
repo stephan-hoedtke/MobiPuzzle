@@ -5,9 +5,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
-import com.stho.mobipuzzle.Game
 import com.stho.mobipuzzle.R
 import com.stho.mobipuzzle.Repository
+import com.stho.mobipuzzle.game.MyGame
 import com.stho.mobipuzzle.getRepository
 
 
@@ -24,7 +24,7 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
             )
         }
 
-    val gameLD: LiveData<Game>
+    val gameLD: LiveData<MyGame>
         get() = repository.gameLD
 
     companion object {

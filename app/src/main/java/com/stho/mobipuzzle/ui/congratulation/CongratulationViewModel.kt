@@ -3,6 +3,7 @@ package com.stho.mobipuzzle.ui.congratulation
 import android.app.Application
 import androidx.lifecycle.*
 import com.stho.mobipuzzle.*
+import com.stho.mobipuzzle.game.MyGame
 
 class CongratulationViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -17,7 +18,7 @@ class CongratulationViewModel(application: Application) : AndroidViewModel(appli
             )
         }
 
-    val gameLD: LiveData<Game>
+    val gameLD: LiveData<MyGame>
         get() = repository.gameLD
 
     val summaryLD: LiveData<Summary>

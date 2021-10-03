@@ -12,6 +12,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.stho.mobipuzzle.databinding.ActivityMainBinding
 import android.content.Intent
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.core.app.TaskStackBuilder
 
 
@@ -77,11 +78,9 @@ class MainActivity : AppCompatActivity() {
 
 private val Theme.resId: Int
     get() = when (this) {
-        Theme.GREEN -> R.style.Theme_MobiPuzzle_Green
         Theme.BORDEAUX -> R.style.Theme_MobiPuzzle_Bordeaux
-        Theme.WHITE -> R.style.Theme_MobiPuzzle_White
-        Theme.DEFAULT -> R.style.Theme_MobiPuzzle_Default
-        else -> R.style.Theme_MobiPuzzle
+        Theme.GREEN -> R.style.Theme_MobiPuzzle_Green
+        else -> R.style.Theme_MobiPuzzle_White
     }
 
 
