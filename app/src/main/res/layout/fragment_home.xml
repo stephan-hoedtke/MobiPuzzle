@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.HomeFragment"
+    tools:ignore="ExtraText">
 
     <TextView
         android:id="@+id/moves"
@@ -60,12 +61,11 @@
         app:layout_constraintBottom_toTopOf="@id/buttonNewGame"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/text_margin"
-        android:src="@drawable/green_bulb"
+        android:src="@drawable/green_bulb_pressable"
         android:contentDescription="@string/label_test_layout"
         android:clickable="true"
         android:focusable="true"
         android:background="?android:attr/selectableItemBackgroundBorderless" />
-
     />
 
     <TextView
@@ -79,7 +79,7 @@
         android:text="@string/default_best_move" />
 
     <TextView
-        android:id="@+id/evaluationInfo"
+        android:id="@+id/engineInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,4 +88,15 @@
         app:layout_constraintBottom_toBottomOf="@id/buttonBestMove"
         android:layout_margin="@dimen/text_margin"
         android:text="@string/default_best_move" />
+
+    <TextView
+        android:id="@+id/evaluationInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/engineInfo"
+        android:layout_margin="@dimen/text_margin"
+        android:text="@string/default_best_move" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.stho.mobipuzzle.mcts
 
 import android.util.Log
+import com.stho.mobipuzzle.game.Status
 import java.lang.Exception
 
 /**
@@ -50,21 +51,26 @@ class MCTS(
         backPropagation(node, result)
     }
 
-    data class BestActionInfo(val action: IAction, val depth: Int, val reward: Double) {
+    data class BestActionInfo(val action: IAction, val depth: Int, val reward: Double, val isSolved: Boolean, val simulations: Int) {
         fun isEqualTo(other: BestActionInfo): Boolean =
-            action.isEqualTo(other.action) && depth == other.depth && reward == other.reward
+            action.isEqualTo(other.action)
+                    && depth == other.depth
+                    && reward == other.reward
+                    && simulations == other.simulations
+                    && isSolved == other.isSolved
     }
 
     fun getBestActionInfo(): BestActionInfo? =
         root.getBestAction()?.let {
             var node = root
             var depth = 0
+
             while (node.isExpanded) {
                 node = node.getChildNodeWithMostSimulations()
                 depth++
             }
 
-            BestActionInfo(it, depth, node.simulationReward)
+            BestActionInfo(it, depth, node.simulationReward / node.simulations, node.state.isSolved, root.simulations)
         }
 
     private fun prepare() {
@@ -113,11 +119,9 @@ class MCTS(
      * any valid moves from the game position defined by L.
      */
     private fun expand(node: Node) {
+        //Log.d("NODE", "Expand node ${node.history}...")
         if (node.isNotExpanded && node.isAlive) {
-            val actions = node.state.getLegalActions().toList()
-            if (actions.size > 6)
-                throw Exception("Too many actions")
-            actions.forEach {
+            node.state.getLegalActions().forEach {
                 val newState = node.state.apply(it)
                 node.expand(it, newState)
             }
@@ -125,8 +129,9 @@ class MCTS(
         if (node.isNotExpanded)
             node.kill() // because there are no legal actions available
 
-        if (node.size > 6)
-            throw Exception("Too many nodes after expanding ${node.size}")
+        //Log.d("NODE", "Node ${node.history} expanded successfully: ${node.size}")
+        //if (node.size > 6)
+        //    throw Exception("Too many nodes after expanding ${node.size}")
     }
 
     /**

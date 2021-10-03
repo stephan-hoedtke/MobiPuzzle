@@ -25,19 +25,23 @@ class Engine(private var scope: CoroutineScope) {
         get() = isRunningLiveData
 
     fun toggleAnalyser(state: IGameState) {
-        if (isRunning.isSet) {
-            stopRunning()
-        } else {
-            mcts.setup(state)
-            start()
+        scope.launch {
+            if (isRunning.isSet) {
+                stopRunning()
+            } else {
+                mcts.setup(state)
+                start()
+            }
         }
     }
 
     fun restartRunningAnalyser(state: IGameState) {
-        if (isRunning.isSet) {
-            stopRunning()
-            mcts.setup(state)
-            start()
+        scope.launch {
+            if (isRunning.isSet) {
+                stopRunning()
+                mcts.setup(state)
+                start()
+            }
         }
     }
 
@@ -46,16 +50,12 @@ class Engine(private var scope: CoroutineScope) {
         run()
     }
 
-    private fun stopRunning() {
+    private suspend fun stopRunning() {
         // set the flag that the background job shall stop
         shallContinue.unset()
 
         // wait until it has stopped
-        job?.also {
-            scope.launch {
-                it.join()
-            }
-        }
+        job?.join()
     }
 
     private fun run() {

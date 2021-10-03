@@ -174,8 +174,13 @@ class HomeFragment : Fragment() {
 
     private fun onObserveBestAction(info: MCTS.BestActionInfo?) {
         info?.also {
+            val normalColor = normalTextColor
+            val selectedColor = Color.RED
             onObserveBestAction(it.action as MyAction)
             binding.bestMoveInfo.text = getString(R.string.best_move_info_params , it.depth, decimalFormat.format(it.reward))
+            binding.bestMoveInfo.setTextColor(if (it.isSolved) selectedColor else normalColor)
+            binding.engineInfo.text = it.simulations.toString()
+
         }
     }
 
@@ -211,7 +216,10 @@ class HomeFragment : Fragment() {
     }
 
     private val normalBackgroundColor: Int
-        get() = MaterialColors.getColor(requireContext(), R.attr.colorSecondary, Color.RED)
+        get() = MaterialColors.getColor(requireContext(), R.attr.colorSecondary, Color.TRANSPARENT)
+
+    private val normalTextColor: Int
+        get() = MaterialColors.getColor(requireContext(), R.attr.colorOnBackground, Color.TRANSPARENT)
 
     private fun showCongratulation() {
         if (viewModel.showCongratulation) {
