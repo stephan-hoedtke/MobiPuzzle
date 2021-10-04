@@ -98,7 +98,6 @@ class HomeFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        requireActivity().application.saveRepository()
         stopSecondsCounter()
     }
 
@@ -142,12 +141,6 @@ class HomeFragment : Fragment() {
                 }
             }
 
-            if (game.isSolved) {
-                binding.game.setBackgroundColor(Color.CYAN)
-            } else {
-                binding.game.setBackgroundColor(Color.TRANSPARENT)
-            }
-
             if (game.status == Status.FINISHED) {
                 showCongratulation()
             }
@@ -180,7 +173,10 @@ class HomeFragment : Fragment() {
             binding.bestMoveInfo.text = getString(R.string.best_move_info_params , it.depth, decimalFormat.format(it.reward))
             binding.bestMoveInfo.setTextColor(if (it.isSolved) selectedColor else normalColor)
             binding.engineInfo.text = it.simulations.toString()
-
+        } ?: run {
+            onObserveBestAction(0)
+            binding.bestMoveInfo.text = ""
+            binding.engineInfo.text = ""
         }
     }
 

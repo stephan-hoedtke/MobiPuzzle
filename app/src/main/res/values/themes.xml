@@ -33,6 +33,7 @@
         <item name="myControlColor">@color/gray_dark</item>
         <item name="myActiveControlColor">@color/black</item>
         <item name="myInactiveControlColor">@color/white</item>
+        <item name="myImageBackgroundColor">@color/white</item>
     </style>
 
     <style name="Theme.MobiPuzzle.Green" parent="Theme.MobiPuzzle">
@@ -48,6 +49,7 @@
         <item name="myControlColor">@color/greenControlColor</item>
         <item name="myActiveControlColor">@color/greenControlColor</item>
         <item name="myInactiveControlColor">@color/greenTextColor</item>
+        <item name="myImageBackgroundColor">@color/greenBackgroundColor</item>
     </style>
 
     <style name="Theme.MobiPuzzle.Bordeaux" parent="Theme.MobiPuzzle">
@@ -63,6 +65,7 @@
         <item name="myControlColor">@color/bordeauxControlColor</item>
         <item name="myActiveControlColor">@color/bordeauxControlColor</item>
         <item name="myInactiveControlColor">@color/bordeauxTextColor</item>
+        <item name="myImageBackgroundColor">@color/black</item>
     </style>
 
     <style name="MobiPuzzle.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">

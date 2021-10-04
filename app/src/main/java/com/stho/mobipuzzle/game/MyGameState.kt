@@ -9,6 +9,7 @@ class MyGameState constructor(
     val status: Status,
     val empty: Int,
     private val board: MyBoard,
+    private val direction: Direction,
     private val history: Array<MyBoard>,
 ) : IGameState {
 
@@ -31,26 +32,16 @@ class MyGameState constructor(
      * To set any real value, other than 0
      */
     fun set(index: Int, value: Int): MyGameState =
-        MyGameState(mode, status, empty = if (value == 0) value else empty, board = board.setValue(index, value), history)
+        MyGameState(mode, status, empty = if (value == 0) value else empty, board = board.setValue(index, value), direction, history)
 
     fun setMode(newMode: Mode): MyGameState =
-        MyGameState(mode = newMode, status, empty, board, history)
+        MyGameState(mode = newMode, status, empty, board, direction, history)
 
     fun setStatus(newStatus: Status): MyGameState =
-        MyGameState(mode, status = newStatus, empty, board, history)
+        MyGameState(mode, status = newStatus, empty, board, direction, history)
 
     fun swapEmptyTo(index: Int): MyGameState =
-        MyGameState(mode, status, empty = index, board = board.swap(empty, index), history)
-
-    fun setEmpty(index: Int): MyGameState =
-        MyGameState(mode, status, empty = index, board = board.setValue(index, 0), history)
-
-//    /**
-//     * may invalidate the empty field
-//     */
-//    fun move(from: Int, to: Int): MyGameState =
-//        MyGameState(mode, status, empty, field = field.move(from, to), history)
-//
+        MyGameState(mode, status, empty = index, board = board.swap(empty, index), direction, history)
 
     override fun apply(action: IAction): IGameState =
         apply(action as MyAction)
@@ -67,7 +58,13 @@ class MyGameState constructor(
         moveBoardRecursive(board, from, to)
             .setEmpty(from)
             .let {
-                MyGameState(mode, status, empty = from, board = it, history)
+                MyGameState(
+                    mode,
+                    status,
+                    empty = from,
+                    board = it,
+                    direction = Direction.getDirection(fromFieldNumber = from, toFieldNumber = to),
+                    history)
             }
 
     private fun moveBoardRecursive(board: MyBoard, from: Int, to: Int): MyBoard =
@@ -78,33 +75,25 @@ class MyGameState constructor(
             moveBoardRecursive(board, to, to + delta).move(from, to)
         }
 
-    private fun isNotEmpty(index: Int): Boolean =
-        index == empty
-
     private fun pushHistory(): MyGameState =
-        MyGameState(mode, status, empty, board = board, history = history + board)
+        MyGameState(mode, status, empty, board = board, direction = direction, history = history + board)
 
     private fun updateStatus(): MyGameState =
         if (isSorted()) setStatus(Status.FINISHED) else this
 
-    fun getArray(): IntArray =
-        board.toIntArray()
-
-    fun getLegalActionsIgnoreHistory(): Sequence<MyAction> =
-        MyAction.getActionsFor(empty).asSequence()
-
-    override fun getLegalActions(): Sequence<IAction> =
-        sequence {
-            MyAction.getActionsFor(empty).forEach {
-                val newField = board.move(it)
-                if (isNotInHistory(newField)) {
-                    yield(it)
-                }
-            }
+    /**
+     * Return all legal actions respecting the history and the last move direction
+     */
+    override fun getLegalActions(): Collection<IAction> =
+        MyAction.getActionsFor(empty).filter {
+                isDifferentDirection(it) && isNotInHistory(board.move(it))
         }
 
     private fun isNotInHistory(board: MyBoard): Boolean =
-        history.none() { it.isEqualTo(board) }
+        history.none { it.isEqualTo(board) }
+
+    private fun isDifferentDirection(action: MyAction): Boolean =
+        direction.isDifferentFrom(action.direction)
 
     /**
      * Returns the data index of a piece in the range of 1..16
@@ -115,7 +104,7 @@ class MyGameState constructor(
     /**
      * Return true, of the array is sorted (mind, in TEXT-mode there are multiple sorted solutions)
      */
-    fun isSorted(): Boolean =
+    private fun isSorted(): Boolean =
         (1..15).all { getPieceValueFor(fieldNumber = it) == getPieceValue(pieceNumber = it) }
 
     private fun getPieceValueFor(fieldNumber: Int): String =
@@ -123,9 +112,6 @@ class MyGameState constructor(
 
     fun getPieceValue(pieceNumber: Int): String =
         getPieceValue(pieceNumber, mode)
-
-    fun getMoveFor(action: MyAction): Move =
-        Move(action.fromFieldNumber, action.toFieldNumber, empty)
 
     /**
      * Return a score which
@@ -150,35 +136,24 @@ class MyGameState constructor(
         if (totalMisplaces == 0) {
             return 1.0
         } else {
-            val distancePenalty = totalDistance * 0.001 // 0 .. 90/1000 --> 0 .. 0.1
-            val misplacesPenalty = totalMisplaces * 0.001 // 0 .. 15/1000 --> 0 .. 0.1
+            val distancePenalty = totalDistance * 0.0001 // 0 .. 90/10000 < 0.01
+            val misplacesPenalty = totalMisplaces * 0.0001 // 0 .. 15/10000 < 0.01
             return 0.3 - distancePenalty - misplacesPenalty
         }
     }
 
     companion object {
 
-        fun create(mode: Mode, status: Status, array: IntArray) =
-            MyBoard.fromArray(array).let {
-                MyGameState(mode, status, it.getIndexOf(0), it, emptyArray())
-            }
-
-        fun create(mode: Mode, status: Status, empty: Int, array: IntArray) =
-            MyGameState(mode, status, empty, MyBoard.fromArray(array), emptyArray())
-
-
-
         // TODO: this is for debugging...
         val defaultValue =
-            MyGameState.create(Mode.NUMBERS, Status.NEW, intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 15, 9, 0, 13, 14))
+            create(Mode.NUMBERS, Status.NEW, intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 15, 9, 0, 13, 14))
 
         val plainValue =
-            MyGameState.create(Mode.NUMBERS, Status.NEW, intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0))
+            create(Mode.NUMBERS, Status.NEW, intArrayOf(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0))
 
-        private fun getPieceValue(pieceNumber: Int, mode: Mode): String =
-            when (mode) {
-                Mode.NUMBERS -> NUMBERS[pieceNumber]
-                Mode.TEXT -> TEXTS[pieceNumber]
+        private fun create(mode: Mode, status: Status, array: IntArray) =
+            MyBoard.fromArray(array).let {
+                MyGameState(mode, status, empty = it.getIndexOf(0), board = it, direction = Direction.NOTHING, history = emptyArray())
             }
 
         /**
@@ -192,6 +167,12 @@ class MyGameState constructor(
             val rj = (j - 1) / 4
             return abs(ci - cj) + abs(ri - rj)
         }
+
+        private fun getPieceValue(pieceNumber: Int, mode: Mode): String =
+            when (mode) {
+                Mode.NUMBERS -> NUMBERS[pieceNumber]
+                Mode.TEXT -> TEXTS[pieceNumber]
+            }
 
         private const val EMPTY: String = ""
         private const val INVALID: String = "/"

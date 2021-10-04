@@ -2,9 +2,10 @@ package com.stho.mobipuzzle.engine
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.stho.mobipuzzle.game.MyGame
 import com.stho.mobipuzzle.game.MyGameFabric
 import com.stho.mobipuzzle.mcts.*
+import com.stho.mobipuzzle.mcts.policies.RandomSimulationPolicy
+import com.stho.mobipuzzle.mcts.policies.UTC
 import kotlinx.coroutines.*
 
 
@@ -51,6 +52,9 @@ class Engine(private var scope: CoroutineScope) {
     }
 
     private suspend fun stopRunning() {
+
+        updateBestAction(null)
+
         // set the flag that the background job shall stop
         shallContinue.unset()
 
@@ -68,24 +72,32 @@ class Engine(private var scope: CoroutineScope) {
 
     private fun runInBackground() {
         updateBestAction(null)
-        while (shallContinue.isSet) {
-            for (j in 1..LOOP) {
-                mcts.run()
-            }
-            updateBestAction(mcts.getBestActionInfo())
-        }
+        runLoop()
         isRunning.unset()
         isRunningLiveData.postValue(false)
     }
 
-    private fun updateBestAction(info: MCTS.BestActionInfo?) {
-        info?.also {
-            bestActionLiveData.postValue(info)
+    private fun runLoop() {
+        while (true) {
+            for (i in 0 until LOOP) {
+                if (isStopped) {
+                    return
+                }
+                mcts.run()
+            }
+            updateBestAction(mcts.getBestActionInfo())
         }
     }
 
+    private val isStopped: Boolean
+        get() = shallContinue.isUnset
+
+    private fun updateBestAction(info: MCTS.BestActionInfo?) {
+        bestActionLiveData.postValue(info)
+    }
+
     companion object {
-        private const val MAX_DEPTH = 400
+        private const val MAX_DEPTH = 500
         private const val LOOP = 100
     }
 }

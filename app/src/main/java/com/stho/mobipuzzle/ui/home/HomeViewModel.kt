@@ -37,6 +37,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     fun startNewGame() {
         repository.startNewGame()
+        engine.restartRunningAnalyser(game.gameState)
     }
 
     fun countSeconds() {

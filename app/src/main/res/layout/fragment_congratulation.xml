@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="?attr/myImageBackgroundColor"
     tools:context=".ui.congratulation.CongratulationFragment">
 
     <androidx.constraintlayout.widget.Guideline
@@ -31,6 +31,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="?attr/myImageBackgroundColor"
         android:text="@string/default_headline"/>
 
     <ImageView
@@ -41,6 +42,7 @@
         app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="?attr/myImageBackgroundColor"
         android:src="@drawable/bordeaux"
         android:contentDescription="@string/label_congratulation" />
 

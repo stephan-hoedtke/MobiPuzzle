@@ -15,11 +15,11 @@ enum class Theme(private val text: String) {
 
         private val defaultValue: Theme = Theme.WHITE
 
-        fun parseTheme(colorString: String?, defaultValue: Theme = Theme.defaultValue): Theme {
-            colorString?.also {
+        fun parseTheme(themeString: String?, defaultValue: Theme = Theme.defaultValue): Theme {
+            themeString?.also {
                 try {
                     if (it.isNotBlank()) {
-                        return valueOf(it)
+                        return values().first { theme -> theme.text == themeString }
                     }
                 } catch (ex: Exception) {
                     // ignore

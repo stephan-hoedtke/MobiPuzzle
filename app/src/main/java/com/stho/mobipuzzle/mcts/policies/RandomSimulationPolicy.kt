@@ -1,5 +1,7 @@
-package com.stho.mobipuzzle.mcts
+package com.stho.mobipuzzle.mcts.policies
 
+import com.stho.mobipuzzle.mcts.IAction
+import com.stho.mobipuzzle.mcts.ISimulationPolicy
 import kotlin.random.Random
 
 class RandomSimulationPolicy : ISimulationPolicy {

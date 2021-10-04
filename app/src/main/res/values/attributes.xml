@@ -12,5 +12,6 @@
     <attr format="color" name="myControlColor" />
     <attr format="color" name="myActiveControlColor" />
     <attr format="color" name="myInactiveControlColor" />
+    <attr format="color" name="myImageBackgroundColor" />
 
 </resources>

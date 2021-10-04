@@ -12,6 +12,13 @@ class ThreadSafeBoolean(value: Boolean = false) {
             }
         }
 
+    val isUnset: Boolean
+        get() {
+            synchronized(lock) {
+                return !backingValue
+            }
+        }
+
     fun set() {
         synchronized(lock) {
             backingValue = true

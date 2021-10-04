@@ -1,5 +1,7 @@
-package com.stho.mobipuzzle.mcts
+package com.stho.mobipuzzle.mcts.policies
 
+import com.stho.mobipuzzle.mcts.IEvaluationPolicy
+import com.stho.mobipuzzle.mcts.Node
 import kotlin.math.ln
 import kotlin.math.sqrt
 

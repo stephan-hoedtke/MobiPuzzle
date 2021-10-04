@@ -119,19 +119,17 @@ class MCTS(
      * any valid moves from the game position defined by L.
      */
     private fun expand(node: Node) {
-        //Log.d("NODE", "Expand node ${node.history}...")
-        if (node.isNotExpanded && node.isAlive) {
-            node.state.getLegalActions().forEach {
-                val newState = node.state.apply(it)
-                node.expand(it, newState)
+        if (node.isAlive) {
+            if (node.isNotExpanded) {
+                node.state.getLegalActions().forEach {
+                    val newState = node.state.apply(it)
+                    node.expand(it, newState)
+                }
+            }
+            if (node.isNotExpanded) {
+                node.kill() // because there are no legal actions available
             }
         }
-        if (node.isNotExpanded)
-            node.kill() // because there are no legal actions available
-
-        //Log.d("NODE", "Node ${node.history} expanded successfully: ${node.size}")
-        //if (node.size > 6)
-        //    throw Exception("Too many nodes after expanding ${node.size}")
     }
 
     /**
@@ -139,11 +137,8 @@ class MCTS(
      *  or rollout. A playout may be as simple as choosing uniform random moves until the game
      *  is decided (for example in chess, the game is won, lost, or drawn).
      */
-    private fun simulate(node: Node): GameResult =
-        simulate(node.state)
-
-    private fun simulate(leafNodeState: IGameState): GameResult {
-        var state = leafNodeState
+    private fun simulate(node: Node): GameResult  {
+        var state = node.state
         var depth = 0
         while (state.isAlive) {
             if (isDead(depth++)) {
@@ -158,6 +153,10 @@ class MCTS(
                 state = state.apply(action)
             }
         }
+        /**
+         * found a winning path
+         */
+        Log.d("WIN", "Win for ${node.history}")
         return GameResult.win
     }
 

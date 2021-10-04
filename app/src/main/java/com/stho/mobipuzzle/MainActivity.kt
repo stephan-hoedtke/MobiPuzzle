@@ -66,6 +66,11 @@ class MainActivity : AppCompatActivity() {
         return navHostFragment.navController
     }
 
+    override fun onPause() {
+        super.onPause()
+        application.saveRepository()
+    }
+
     private fun onObserveSettings(settings: Settings) {
         if (theme != settings.theme) {
             TaskStackBuilder.create(this)

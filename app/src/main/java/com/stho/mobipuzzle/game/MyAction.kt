@@ -15,6 +15,9 @@ data class MyAction(val fromFieldNumber: Int, val toFieldNumber: Int): IAction {
         return "($fromFieldNumber-$toFieldNumber)"
     }
 
+    val direction: Direction
+        get() = Direction.getDirection(fromFieldNumber, toFieldNumber)
+
     companion object {
 
         fun getActionsFor(empty: Int): Array<MyAction> =

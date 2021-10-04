@@ -1,5 +1,6 @@
 package com.stho.mobipuzzle.game
 
+import com.stho.mobipuzzle.Theme
 import java.lang.Exception
 
 enum class Mode(private val text: String) {
@@ -18,7 +19,7 @@ enum class Mode(private val text: String) {
             modeString?.also {
                 try {
                     if (it.isNotBlank()) {
-                        return valueOf(it)
+                        return values().first { mode -> mode.text == modeString }
                     }
                 } catch (ex: Exception) {
                     // ignore

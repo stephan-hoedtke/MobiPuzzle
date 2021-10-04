@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.stho.mobipuzzle.databinding.FragmentHomeBinding
+import com.stho.mobipuzzle.game.Direction
 import com.stho.mobipuzzle.game.MyGame
 import com.stho.mobipuzzle.game.Move
 import com.stho.mobipuzzle.game.MyAction
@@ -76,13 +77,13 @@ class MyTouchListener(private val pieceNumber: Int, private val viewModel: HomeV
 
     private fun updateDragViewPositions(motionEvent: MotionEvent, move: Move) {
         val dx = when (move.direction) {
-            Move.Direction.RIGHT -> (motionEvent.rawX - startPosition.x).coerceIn(0f, maxDeltaX)
-            Move.Direction.LEFT -> (motionEvent.rawX - startPosition.x).coerceIn(-maxDeltaX, 0f)
+            Direction.RIGHT -> (motionEvent.rawX - startPosition.x).coerceIn(0f, maxDeltaX)
+            Direction.LEFT -> (motionEvent.rawX - startPosition.x).coerceIn(-maxDeltaX, 0f)
             else -> 0f
         }
         val dy = when (move.direction) {
-            Move.Direction.DOWN -> (motionEvent.rawY - startPosition.y).coerceIn(0f, maxDeltaY)
-            Move.Direction.UP -> (motionEvent.rawY - startPosition.y).coerceIn(-maxDeltaY, 0f)
+            Direction.DOWN -> (motionEvent.rawY - startPosition.y).coerceIn(0f, maxDeltaY)
+            Direction.UP -> (motionEvent.rawY - startPosition.y).coerceIn(-maxDeltaY, 0f)
             else -> 0f
         }
         for (fieldNumber: Int in move.movingFields) {
@@ -97,10 +98,10 @@ class MyTouchListener(private val pieceNumber: Int, private val viewModel: HomeV
 
     private fun moveDragViews(motionEvent: MotionEvent, move: Move) {
         val isMove: Boolean = when (move.direction) {
-            Move.Direction.RIGHT -> (motionEvent.rawX - startPosition.x) > THRESHOLD
-            Move.Direction.LEFT -> (motionEvent.rawX - startPosition.x) < -THRESHOLD
-            Move.Direction.DOWN -> (motionEvent.rawY - startPosition.y) > THRESHOLD
-            Move.Direction.UP -> (motionEvent.rawY - startPosition.y) < -THRESHOLD
+            Direction.RIGHT -> (motionEvent.rawX - startPosition.x) > THRESHOLD
+            Direction.LEFT -> (motionEvent.rawX - startPosition.x) < -THRESHOLD
+            Direction.DOWN -> (motionEvent.rawY - startPosition.y) > THRESHOLD
+            Direction.UP -> (motionEvent.rawY - startPosition.y) < -THRESHOLD
             else -> false
         }
         if (isMove) {

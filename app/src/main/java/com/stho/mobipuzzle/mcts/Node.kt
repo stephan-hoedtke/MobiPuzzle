@@ -162,16 +162,20 @@ open class Node private constructor(val parent: Node?, val depth: Int, val state
     val history: String
         get() {
             val sb = StringBuilder()
-            parent?.also {
-                sb.append(it.history)
-                sb.append(", ")
-                sb.append(it.getParentAction())
+            parent?.also { node->
+                node.getParentAction()?.also {
+                    sb.append(node.history)
+                    if (sb.isNotEmpty()) {
+                        sb.append(", ")
+                    }
+                    sb.append(it)
+                }
             }
             return sb.toString()
         }
 
     private val averageReward
-        get() = simulationReward / simulations
+        get() = if (simulations > 0) simulationReward / simulations else 0
 
     private fun getParentAction(): IAction? =
         parent?.getParentAction(this)

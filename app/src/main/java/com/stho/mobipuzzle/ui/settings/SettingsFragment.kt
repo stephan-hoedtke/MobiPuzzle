@@ -14,6 +14,7 @@ import com.stho.mobipuzzle.R
 import com.stho.mobipuzzle.Settings
 import com.stho.mobipuzzle.Theme
 import com.stho.mobipuzzle.databinding.FragmentSettingsBinding
+import com.stho.mobipuzzle.saveRepository
 
 
 class SettingsFragment : Fragment() {
