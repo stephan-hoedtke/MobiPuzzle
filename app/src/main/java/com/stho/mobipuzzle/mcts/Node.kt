@@ -11,6 +11,7 @@ open class Node private constructor(val parent: Node?, val depth: Int, val state
     private val nodes: ArrayList<Node> = ArrayList()
     private val actions: ArrayList<IAction> = ArrayList()
 
+    var evaluation: Double = state.evaluate()
     var averageReward: Double = 0.0
     var cumulatedReward: Double = 0.0
     var simulations: Int = 0
@@ -85,23 +86,23 @@ open class Node private constructor(val parent: Node?, val depth: Int, val state
     /**
      * Get the node with the most simulations. Should only be run for a parent node with simulations > 0.
      */
-    fun getChildNodeWithMostSimulations(): Node {
-        var simulations = 0
+    fun getChildNodeWithBestReward(): Node {
+        var reward = 0.0
         var node: Node? = null
         nodes.forEach {
-            if (simulations < it.simulations || node == null) {
-                simulations = it.simulations
+            if (node == null || reward < it.averageReward) {
                 node = it
+                reward = it.averageReward
             }
         }
-        return node ?: throw Exception("This node doesn't have any child nodes: $this")
+        return node!!
     }
 
     /**
      * Get the action with the highest number of wins
      */
     fun getBestAction(): IAction? {
-        var simulations = 0
+        var reward = 0.0
         var action: IAction? = null
 
         for (index in nodes.indices) {
@@ -109,9 +110,9 @@ open class Node private constructor(val parent: Node?, val depth: Int, val state
             if (node.isSolved) {
                 return actions[index]
             }
-            if (simulations < node.simulations || action == null) {
-                simulations = node.simulations
+            if (action == null || reward < node.averageReward) {
                 action = actions[index]
+                reward = node.averageReward
             }
         }
 
@@ -131,7 +132,7 @@ open class Node private constructor(val parent: Node?, val depth: Int, val state
         Node(this, depth = depth + 1, state)
 
     override fun toString(): String {
-        val dec = DecimalFormat("#.###")
+        val dec = DecimalFormat("#.####")
         val sb = StringBuilder()
         if (sb.isNotEmpty()) {
             sb.append("; ")

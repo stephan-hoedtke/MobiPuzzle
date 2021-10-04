@@ -66,11 +66,11 @@ class MCTS(
             var depth = 0
 
             while (node.isExpanded) {
-                node = node.getChildNodeWithMostSimulations()
+                node = node.getChildNodeWithBestReward()
                 depth++
             }
 
-            BestActionInfo(it, depth, node.cumulatedReward / node.simulations, node.state.isSolved, root.simulations)
+            BestActionInfo(it, depth, node.averageReward, node.state.isSolved, root.simulations)
         }
 
     private fun prepare() {
@@ -142,14 +142,13 @@ class MCTS(
         var depth = 0
         while (state.isAlive) {
             if (isDead(depth++)) {
-                val value = state.evaluate()
-                return GameResult.alive(value)
+                return GameResult.alive(state.evaluate(), depth)
             } else {
                 val actions = state.getLegalActions().toList()
                 if (actions.isEmpty()) {
-                    return GameResult.dead
+                    return GameResult.dead()
                 }
-                val action = simulationPolicy.chooseAction(actions)
+                val action = simulationPolicy.chooseAction(state, actions)
                 state = state.apply(action)
             }
         }
@@ -157,7 +156,7 @@ class MCTS(
          * found a winning path
          */
         Log.d("WIN", "Win for ${node.history}")
-        return GameResult.win
+        return GameResult.win(depth)
     }
 
     private fun isDead(depth: Int): Boolean =
@@ -172,7 +171,7 @@ class MCTS(
         while (parent != null) {
             propagationPolicy.propagate(parent, value)
             parent = getParent(parent)
-            value -= 0.00001 // reduce the reward by this delta for every depth
+            value = GameResult.decrement(value) // reduce the reward by this delta for every depth
         }
     }
 
