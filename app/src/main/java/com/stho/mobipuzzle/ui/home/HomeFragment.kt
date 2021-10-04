@@ -33,7 +33,8 @@ class HomeFragment : Fragment() {
     private class Measures(
         val x0: Float,
         val dx: Float,
-        val y0: Float, val
+        val y0: Float,
+        val
         dy: Float,
     )
 
@@ -41,7 +42,10 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val handler = Handler(Looper.getMainLooper())
     private var measures: Measures? = null
-    private val decimalFormat = DecimalFormat("0.0000")
+    private val decimalFormat = DecimalFormat("0.0000").apply {
+        decimalFormatSymbols.decimalSeparator = '.'
+        decimalFormatSymbols.groupingSeparator = ','
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +53,11 @@ class HomeFragment : Fragment() {
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         binding.board.piece1.setOnTouchListener(MyTouchListener(1, viewModel, binding))
@@ -77,12 +85,22 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.gameLD.observe(viewLifecycleOwner, { game -> onObserveGame(game) })
-        viewModel.settingsLD.observe(viewLifecycleOwner, { settings -> onObserveSettings(settings) })
-        viewModel.movesCounterLD.observe(viewLifecycleOwner, { moves -> onObserveMovesCounter(moves) })
-        viewModel.secondsCounterLD.observe(viewLifecycleOwner, { seconds -> onObserveSecondsCounter(seconds) })
+        viewModel.settingsLD.observe(
+            viewLifecycleOwner,
+            { settings -> onObserveSettings(settings) })
+        viewModel.movesCounterLD.observe(
+            viewLifecycleOwner,
+            { moves -> onObserveMovesCounter(moves) })
+        viewModel.secondsCounterLD.observe(
+            viewLifecycleOwner,
+            { seconds -> onObserveSecondsCounter(seconds) })
         viewModel.summaryLD.observe(viewLifecycleOwner, { summary -> onObserveSummary(summary) })
-        viewModel.bestActionLD.observe(viewLifecycleOwner, { action -> onObserveBestAction(action) })
-        viewModel.isAnalyserRunningLD.observe(viewLifecycleOwner, { isRunning -> onObserveIsAnalyserRunning(isRunning) })
+        viewModel.bestActionLD.observe(
+            viewLifecycleOwner,
+            { action -> onObserveBestAction(action) })
+        viewModel.isAnalyserRunningLD.observe(
+            viewLifecycleOwner,
+            { isRunning -> onObserveIsAnalyserRunning(isRunning) })
 
         updateActionBar()
 
@@ -155,7 +173,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun onObserveMovesCounter(moves: Int) {
-        binding.moves.text = resources.getQuantityString(R.plurals.label_moves_plurals, moves, moves)
+        binding.moves.text =
+            resources.getQuantityString(R.plurals.label_moves_plurals, moves, moves)
     }
 
     private fun onObserveSecondsCounter(seconds: Long) {
@@ -171,7 +190,8 @@ class HomeFragment : Fragment() {
             val normalColor = normalTextColor
             val selectedColor = Color.RED
             onObserveBestAction(it.action as MyAction)
-            binding.bestMoveInfo.text = getString(R.string.best_move_info_params , it.depth, decimalFormat.format(it.reward))
+            binding.bestMoveInfo.text =
+                getString(R.string.best_move_info_params, it.depth, decimalFormat.format(it.reward))
             binding.bestMoveInfo.setTextColor(if (it.isSolved) selectedColor else normalColor)
             binding.engineInfo.text = it.simulations.toString()
         } ?: run {
@@ -208,7 +228,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun onObserveIsAnalyserRunning(isRunning: Boolean) {
-        val resId = if (isRunning) R.drawable.red_bulb_pressable else R.drawable.green_bulb_pressable
+        val resId =
+            if (isRunning) R.drawable.red_bulb_pressable else R.drawable.green_bulb_pressable
         binding.buttonBestMove.setImageResource(resId)
     }
 
@@ -216,7 +237,11 @@ class HomeFragment : Fragment() {
         get() = MaterialColors.getColor(requireContext(), R.attr.colorSecondary, Color.TRANSPARENT)
 
     private val normalTextColor: Int
-        get() = MaterialColors.getColor(requireContext(), R.attr.colorOnBackground, Color.TRANSPARENT)
+        get() = MaterialColors.getColor(
+            requireContext(),
+            R.attr.colorOnBackground,
+            Color.TRANSPARENT
+        )
 
     private fun showCongratulation() {
         if (viewModel.showCongratulation) {

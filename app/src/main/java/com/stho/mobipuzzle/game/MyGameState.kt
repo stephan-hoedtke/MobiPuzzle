@@ -23,7 +23,7 @@ class MyGameState constructor(
         isEqualTo(other as MyGameState)
 
     private fun isEqualTo(other: MyGameState): Boolean =
-        mode == other.mode && status != other.status && empty == other.empty && board.isEqualTo(other.board)
+        mode == other.mode && status == other.status && empty == other.empty && board.isEqualTo(other.board)
 
     operator fun get(index: Int): Int =
         board.getValue(index)
