@@ -137,7 +137,7 @@ class MyGameState constructor(
             return 1.0
         } else {
             val distancePenalty = totalDistance * 0.0001 // 0 .. 90/10000 < 0.01
-            val misplacesPenalty = totalMisplaces * 0.0001 // 0 .. 15/10000 < 0.01
+            val misplacesPenalty = totalMisplaces * 0.01 // 0 .. 15/100 < 0.1
             return 0.3 - distancePenalty - misplacesPenalty
         }
     }

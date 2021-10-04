@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.stho.mobipuzzle.game.MyGameFabric
 import com.stho.mobipuzzle.mcts.*
+import com.stho.mobipuzzle.mcts.policies.AveragePropagationPolicy
+import com.stho.mobipuzzle.mcts.policies.MaxValuePropagationPolicy
 import com.stho.mobipuzzle.mcts.policies.RandomSimulationPolicy
 import com.stho.mobipuzzle.mcts.policies.UTC
 import kotlinx.coroutines.*
@@ -14,9 +16,10 @@ class Engine(private var scope: CoroutineScope) {
     private var isRunning: ThreadSafeBoolean = ThreadSafeBoolean()
     private val isRunningLiveData: MutableLiveData<Boolean> = MutableLiveData<Boolean>().apply { value = false }
     private val rolloutPolicy = RandomSimulationPolicy()
-    private val evaluationPolicy: IEvaluationPolicy = UTC()
+    private val evaluationPolicy: IEvaluationPolicy = UTC(C)
+    private val propagationPolicy: IPropagationPolicy = MaxValuePropagationPolicy()
     private val bestActionLiveData: MutableLiveData<MCTS.BestActionInfo?> = MutableLiveData<MCTS.BestActionInfo?>()
-    private val mcts = MCTS(MyGameFabric(), rolloutPolicy, evaluationPolicy, MAX_DEPTH)
+    private val mcts = MCTS(MyGameFabric(), rolloutPolicy, evaluationPolicy, propagationPolicy, MAX_DEPTH)
     private var job: Job? = null
 
     val bestActionLD: LiveData<MCTS.BestActionInfo?>
@@ -97,9 +100,10 @@ class Engine(private var scope: CoroutineScope) {
     }
 
     companion object {
-        private const val MAX_DEPTH = 500
+        private const val MAX_DEPTH = 200
         private const val LOOP = 100
-    }
+        private const val C = 0.2
+     }
 }
 
 

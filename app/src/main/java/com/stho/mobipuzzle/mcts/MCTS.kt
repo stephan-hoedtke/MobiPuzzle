@@ -1,7 +1,6 @@
 package com.stho.mobipuzzle.mcts
 
 import android.util.Log
-import com.stho.mobipuzzle.game.Status
 import java.lang.Exception
 
 /**
@@ -13,6 +12,7 @@ class MCTS(
     private val fabric: IGameFabric,
     private val simulationPolicy: ISimulationPolicy,
     private val evaluationPolicy: IEvaluationPolicy,
+    private val propagationPolicy: IPropagationPolicy,
     private val maxDepth: Int) {
 
     private lateinit var root: Node
@@ -70,7 +70,7 @@ class MCTS(
                 depth++
             }
 
-            BestActionInfo(it, depth, node.simulationReward / node.simulations, node.state.isSolved, root.simulations)
+            BestActionInfo(it, depth, node.cumulatedReward / node.simulations, node.state.isSolved, root.simulations)
         }
 
     private fun prepare() {
@@ -170,7 +170,7 @@ class MCTS(
         var value = result.value
         var parent: Node? = node
         while (parent != null) {
-            parent.propagate(value)
+            propagationPolicy.propagate(parent, value)
             parent = getParent(parent)
             value -= 0.00001 // reduce the reward by this delta for every depth
         }

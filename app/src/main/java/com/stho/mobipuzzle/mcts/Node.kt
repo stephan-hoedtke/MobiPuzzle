@@ -11,7 +11,8 @@ open class Node private constructor(val parent: Node?, val depth: Int, val state
     private val nodes: ArrayList<Node> = ArrayList()
     private val actions: ArrayList<IAction> = ArrayList()
 
-    var simulationReward: Double = 0.0
+    var averageReward: Double = 0.0
+    var cumulatedReward: Double = 0.0
     var simulations: Int = 0
     var isDirty: Boolean = true
     var isDead: Boolean = false
@@ -22,12 +23,6 @@ open class Node private constructor(val parent: Node?, val depth: Int, val state
 
     val isAlive
         get() = state.isAlive && !isDead
-
-    /**
-     * Unvisited
-     */
-    val isLeaf: Boolean
-        get() = (simulations == 0)
 
     val isNotExpanded: Boolean
         get() = nodes.isEmpty()
@@ -128,13 +123,7 @@ open class Node private constructor(val parent: Node?, val depth: Int, val state
         actions.add(action)
     }
 
-    fun propagate(value: Double) {
-        simulations++
-        simulationReward += value
-        touch()
-    }
-
-    private fun touch() {
+    fun touch() {
         isDirty = true
     }
 
@@ -173,9 +162,6 @@ open class Node private constructor(val parent: Node?, val depth: Int, val state
             }
             return sb.toString()
         }
-
-    private val averageReward
-        get() = if (simulations > 0) simulationReward / simulations else 0
 
     private fun getParentAction(): IAction? =
         parent?.getParentAction(this)
