@@ -83,13 +83,18 @@ class Repository(games: Int, ratingPoints: Double, settings: Settings) {
     }
 
     fun startNewGame() {
+        registerUnfinishedGames()
+        game.shuffle(SHUFFLE_MOVES)
+        timeCounter.stop()
+        movesCounterLiveData.postValue(0)
+        secondsCounterLiveData.postValue(0L)
+        touchGame()
+    }
+
+    private fun registerUnfinishedGames() {
         if (game.isAlive) {
             registerGame(movesCounterLD.value ?: 0, secondsCounterLD.value ?: 0L, false)
         }
-        game.shuffle(SHUFFLE_MOVES)
-        touchGame()
-        movesCounterLiveData.postValue(0)
-        secondsCounterLiveData.postValue(0L)
     }
 
     fun setStatusCongratulated() {

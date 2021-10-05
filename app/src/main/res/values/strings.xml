@@ -39,7 +39,9 @@
         <item quantity="other">%.1f points in %d games</item>
     </plurals>
 
-    <string name="label_summary_params">%d moves in %s</string>
+    <string name="label_summary_params">%1$d moves in %2$s</string>
+    <string name="best_action_win_params">%1$d (%2$d): %3$s</string>
+    <string name="best_action_params">(%1$d): %2$s</string>
 
     <!-- Preferences -->
     <string name="appearance_header">Appearance</string>
@@ -47,6 +49,8 @@
     <string name="appearance_theme_title">Theme</string>
     <string name="behavior_header">Behavior</string>
     <string name="behavior_congratulations_title">Show congratulation</string>
+    <string name="behavior_engine_details_title">Show engine details</string>
+    <string name="behavior_best_action_title">Show best action</string>
     <string name="label_congratulation">Congratulation</string>
     <string name="label_default">Default</string>
     <string name="label_green">Green</string>
@@ -55,7 +59,8 @@
     <string name="label_text">Text</string>
     <string name="label_white">White</string>
     <string name="label_test_layout">Test Layout</string>
-    <string name="default_best_move" />
-    <string name="best_move_info_params">"%d: %s"</string>
+    <string name="default_best_move">41: 0.2345</string>
+    <string name="default_engine_info">1374</string>
+    <string name="default_evaluation_info">0.2345</string>
 
 </resources>

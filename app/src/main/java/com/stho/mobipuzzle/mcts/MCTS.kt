@@ -51,9 +51,19 @@ class MCTS(
         backPropagation(node, result)
     }
 
-    data class BestActionInfo(val action: IAction, val depth: Int, val reward: Double, val isSolved: Boolean, val simulations: Int) {
+    data class BestActionInfo(val action: IAction, val node: Node, val depth: Int, val reward: Double, val simulations: Int) {
+
+        val isSolved: Boolean = node.state.isSolved
+        val winDepth: Int =
+            when {
+                isSolved -> depth
+                node.winDepth > 0 -> depth + node.winDepth
+                else -> 0
+            }
+
         fun isEqualTo(other: BestActionInfo): Boolean =
             action.isEqualTo(other.action)
+                    && node == other.node
                     && depth == other.depth
                     && reward == other.reward
                     && simulations == other.simulations
@@ -64,13 +74,19 @@ class MCTS(
         root.getBestAction()?.let {
             var node = root
             var depth = 0
+            var reward = node.averageReward
 
             while (node.isExpanded) {
-                node = node.getChildNodeWithBestReward()
+                val newNode = node.getChildNodeWithBestReward()
+                if (newNode.averageReward < node.averageReward) {
+                    break;
+                }
+                reward = reward.coerceAtLeast(newNode.averageReward)
+                node = newNode
                 depth++
             }
 
-            BestActionInfo(it, depth, node.averageReward, node.state.isSolved, root.simulations)
+            BestActionInfo(it, node, depth, reward, root.simulations)
         }
 
     private fun prepare() {
@@ -146,7 +162,7 @@ class MCTS(
             } else {
                 val actions = state.getLegalActions().toList()
                 if (actions.isEmpty()) {
-                    return GameResult.dead()
+                    return GameResult.dead(depth)
                 }
                 val action = simulationPolicy.chooseAction(state, actions)
                 state = state.apply(action)
@@ -155,7 +171,6 @@ class MCTS(
         /**
          * found a winning path
          */
-        Log.d("WIN", "Win for ${node.history}")
         return GameResult.win(depth)
     }
 
@@ -170,6 +185,10 @@ class MCTS(
         var parent: Node? = node
         while (parent != null) {
             propagationPolicy.propagate(parent, value)
+            if (result.isWin) {
+                if (parent.winDepth > result.depth || parent.winDepth == 0)
+                    parent.winDepth = result.depth
+            }
             parent = getParent(parent)
             value = GameResult.decrement(value) // reduce the reward by this delta for every depth
         }

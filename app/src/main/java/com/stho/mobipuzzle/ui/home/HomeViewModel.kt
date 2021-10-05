@@ -31,6 +31,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     val showCongratulation: Boolean
         get() = repository.settings.showCongratulation
 
+    val showEngineDetails: Boolean
+        get() = repository.settings.showEngineDetails
+
+    val showBestAction: Boolean
+        get() = repository.settings.showBestAction
+
     fun touchGame() {
         repository.touchGame()
     }

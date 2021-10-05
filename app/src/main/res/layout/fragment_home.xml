@@ -72,31 +72,34 @@
         android:id="@+id/bestMoveInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/buttonBestMove"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/buttonBestMove"
-        app:layout_constraintBottom_toBottomOf="@id/buttonBestMove"
         android:layout_margin="@dimen/text_margin"
-        android:text="@string/default_best_move" />
+        android:text="@string/default_best_move"
+        />
 
     <TextView
         android:id="@+id/engineInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/bestMoveInfo"
+        app:layout_constraintEnd_toStartOf="@id/evaluationInfo"
         app:layout_constraintTop_toTopOf="@id/buttonBestMove"
         app:layout_constraintBottom_toBottomOf="@id/buttonBestMove"
         android:layout_margin="@dimen/text_margin"
-        android:text="@string/default_best_move" />
+        android:text="@string/default_engine_info" />
 
     <TextView
         android:id="@+id/evaluationInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/engineInfo"
+        app:layout_constraintStart_toEndOf="@id/engineInfo"
+        app:layout_constraintEnd_toStartOf="@id/buttonBestMove"
+        app:layout_constraintTop_toTopOf="@id/buttonBestMove"
+        app:layout_constraintBottom_toBottomOf="@id/buttonBestMove"
         android:layout_margin="@dimen/text_margin"
-        android:text="@string/default_best_move" />
+        android:text="@string/default_evaluation_info"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

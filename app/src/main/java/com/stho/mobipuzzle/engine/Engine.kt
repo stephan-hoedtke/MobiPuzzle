@@ -15,7 +15,7 @@ class Engine(private var scope: CoroutineScope) {
     private val rolloutPolicy: ISimulationPolicy = BestEvaluationSimulationPolicy()
     private val evaluationPolicy: IEvaluationPolicy = UTC(C)
     private val propagationPolicy: IPropagationPolicy = MaxValuePropagationPolicy()
-    private val bestActionLiveData: MutableLiveData<MCTS.BestActionInfo?> = MutableLiveData<MCTS.BestActionInfo?>()
+    private val bestActionLiveData: MutableLiveData<MCTS.BestActionInfo?> = MutableLiveData<MCTS.BestActionInfo?>().apply { value = null }
     private val mcts = MCTS(MyGameFabric(), rolloutPolicy, evaluationPolicy, propagationPolicy, MAX_DEPTH)
     private var job1: Job? = null
     private var job2: Job? = null

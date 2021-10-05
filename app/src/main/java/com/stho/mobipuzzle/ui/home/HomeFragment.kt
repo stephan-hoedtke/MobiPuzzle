@@ -24,6 +24,8 @@ import kotlinx.coroutines.launch
 import java.security.InvalidParameterException
 
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.snackbar.Snackbar
+import com.stho.mobipuzzle.game.MyGameState
 import com.stho.mobipuzzle.mcts.MCTS
 import java.text.DecimalFormat
 
@@ -78,6 +80,7 @@ class HomeFragment : Fragment() {
 
         binding.buttonNewGame.setOnClickListener { viewModel.startNewGame() }
         binding.buttonBestMove.setOnClickListener { startEngine() }
+        binding.bestMoveInfo.setOnClickListener { showBestActionSnackbar() }
         return binding.root
     }
 
@@ -164,7 +167,7 @@ class HomeFragment : Fragment() {
                 showCongratulation()
             }
 
-            binding.evaluationInfo.text = decimalFormat.format(game.gameState.evaluate())
+            showEngineDetails(game.gameState)
         }
     }
 
@@ -187,24 +190,49 @@ class HomeFragment : Fragment() {
 
     private fun onObserveBestAction(info: MCTS.BestActionInfo?) {
         info?.also {
-            val normalColor = normalTextColor
-            val selectedColor = Color.RED
             onObserveBestAction(it.action as MyAction)
-            binding.bestMoveInfo.text =
-                getString(R.string.best_move_info_params, it.depth, decimalFormat.format(it.reward))
-            binding.bestMoveInfo.setTextColor(if (it.isSolved) selectedColor else normalColor)
-            binding.engineInfo.text = it.simulations.toString()
+            showBestActionInfo(info)
         } ?: run {
             onObserveBestAction(0)
-            binding.bestMoveInfo.text = ""
-            binding.engineInfo.text = ""
+            hideBestActionInfo()
         }
     }
 
+    private fun showBestActionInfo(info: MCTS.BestActionInfo) {
+        if (viewModel.showEngineDetails) {
+            val rewardString = decimalFormat.format(info.reward)
+            val text = if (info.winDepth > 0) {
+                getString(R.string.best_action_win_params, info.winDepth, info.depth, rewardString)
+            } else {
+                getString(R.string.best_action_params, info.depth, rewardString)
+            }
+            binding.bestMoveInfo.text = text
+            binding.engineInfo.text = info.simulations.toString()
+        } else {
+            val text = if (info.winDepth > 0) info.winDepth.toString() else ""
+            binding.bestMoveInfo.text = text
+            binding.engineInfo.text = ""
+        }
+        showBestActionInfoColor(info.isSolved)
+    }
+
+    private fun showBestActionInfoColor(isSolved: Boolean) {
+        binding.bestMoveInfo.setTextColor(if (isSolved) highlightTextColor else normalTextColor)
+    }
+
+    private fun hideBestActionInfo() {
+        binding.bestMoveInfo.text = ""
+        binding.engineInfo.text = ""
+    }
+
     private fun onObserveBestAction(action: MyAction) {
-        val fromFieldNumber = action.fromFieldNumber
-        val pieceNumber = viewModel.game.getPieceNumberOf(fromFieldNumber)
-        onObserveBestAction(pieceNumber)
+        if (viewModel.showBestAction) {
+            val fromFieldNumber = action.fromFieldNumber
+            val pieceNumber = viewModel.game.getPieceNumberOf(fromFieldNumber)
+            onObserveBestAction(pieceNumber)
+        } else {
+            onObserveBestAction(0)
+        }
     }
 
     private fun onObserveBestAction(pieceNumber: Int) {
@@ -228,8 +256,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun onObserveIsAnalyserRunning(isRunning: Boolean) {
-        val resId =
-            if (isRunning) R.drawable.red_bulb_pressable else R.drawable.green_bulb_pressable
+        val resId = if (isRunning) R.drawable.red_bulb_pressable else R.drawable.green_bulb_pressable
         binding.buttonBestMove.setImageResource(resId)
     }
 
@@ -237,17 +264,41 @@ class HomeFragment : Fragment() {
         get() = MaterialColors.getColor(requireContext(), R.attr.colorSecondary, Color.TRANSPARENT)
 
     private val normalTextColor: Int
-        get() = MaterialColors.getColor(
-            requireContext(),
-            R.attr.colorOnBackground,
-            Color.TRANSPARENT
-        )
+        get() = MaterialColors.getColor(requireContext(), R.attr.colorOnBackground, Color.TRANSPARENT)
+
+    private val highlightTextColor: Int
+        get() = Color.RED
 
     private fun showCongratulation() {
         if (viewModel.showCongratulation) {
             navController.navigate(HomeFragmentDirections.actionNavigationHomeToNavigationCongratulation())
         } else {
             viewModel.setStatusCongratulated()
+        }
+    }
+
+    private fun showEngineDetails(state: MyGameState) {
+        if (viewModel.showEngineDetails) {
+            binding.evaluationInfo.text = decimalFormat.format(state.evaluate())
+        } else {
+            binding.evaluationInfo.text = ""
+        }
+    }
+
+    private fun showBestActionSnackbar() {
+        viewModel.bestActionLD.value?.also {
+            showBestActionSnackbar(it)
+        }
+    }
+
+    private fun showBestActionSnackbar(info: MCTS.BestActionInfo) {
+        val message = info.node.history
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_INDEFINITE).apply {
+            setAction("Close", View.OnClickListener { this.dismiss() })
+            val  snackbarView = getView()
+            val  textView = snackbarView.findViewById(R.id.snackbar_text) as TextView
+            textView.maxLines = 15 // show multiple line
+            show()
         }
     }
 

@@ -9,7 +9,7 @@ class Helpers {
             val minutes = seconds / 60
             val remainingSeconds = seconds - (60 * minutes)
             return if (minutes > 60) {
-                val hours = seconds / 60
+                val hours = minutes / 60
                 val remainingMinutes = minutes - (60 * hours)
                 String.format("%02d:%02d:%02d", hours, remainingMinutes, remainingSeconds)
             } else {

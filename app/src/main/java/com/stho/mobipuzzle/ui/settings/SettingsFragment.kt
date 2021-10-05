@@ -42,6 +42,8 @@ class SettingsFragment : Fragment() {
         binding.radioButtonThemeBordeaux.setOnClickListener { viewModel.setTheme(Theme.BORDEAUX) }
 
         binding.switchCongratulation.setOnCheckedChangeListener { _, value -> viewModel.setShowCongratulation(value) }
+        binding.switchEngineDetails.setOnCheckedChangeListener { _, value -> viewModel.setShowEngineDetails(value) }
+        binding.switchBestAction.setOnCheckedChangeListener { _, value -> viewModel.setShowBestAction(value) }
 
         binding.buttonTestLayout.setOnClickListener { testLayout() }
         return binding.root
@@ -60,6 +62,8 @@ class SettingsFragment : Fragment() {
         binding.radioButtonThemeGreen.isChecked = (settings.theme == Theme.GREEN)
         binding.radioButtonThemeBordeaux.isChecked = (settings.theme == Theme.BORDEAUX)
         binding.switchCongratulation.isChecked = settings.showCongratulation
+        binding.switchEngineDetails.isChecked = settings.showEngineDetails
+        binding.switchBestAction.isChecked = settings.showBestAction
     }
 
     private fun updateActionBar() {

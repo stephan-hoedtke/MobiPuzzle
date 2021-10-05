@@ -121,11 +121,32 @@
                 app:layout_constraintTop_toBottomOf="@id/behavior"
                 android:text="@string/behavior_congratulations_title" />
 
+             <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchEngineDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/radio_button_intent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switchCongratulation"
+                android:text="@string/behavior_engine_details_title" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/switchBestAction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/radio_button_intent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/switchEngineDetails"
+                android:text="@string/behavior_best_action_title" />
+
+
             <ImageView
                 android:id="@+id/buttonTestLayout"
                 android:layout_width="@dimen/button_size"
                 android:layout_height="@dimen/button_size"
-                app:layout_constraintTop_toBottomOf="@id/switchCongratulation"
+                app:layout_constraintTop_toBottomOf="@id/switchBestAction"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_margin="@dimen/text_margin"
                 android:src="@drawable/green_bulb"

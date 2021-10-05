@@ -30,6 +30,16 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         repository.touchSettings()
     }
 
+    fun setShowEngineDetails(value: Boolean) {
+        repository.settings.showEngineDetails = value
+        repository.touchSettings()
+    }
+
+    fun setShowBestAction(value: Boolean) {
+        repository.settings.showBestAction = value
+        repository.touchSettings()
+    }
+
     companion object {
 
         fun build(fragment: SettingsFragment): SettingsViewModel =

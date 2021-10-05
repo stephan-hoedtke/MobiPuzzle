@@ -1,17 +1,17 @@
 package com.stho.mobipuzzle.mcts
 
-data class GameResult(val value: Double, val isWin: Boolean) {
+data class GameResult(val depth: Int, val value: Double, val isWin: Boolean) {
 
     companion object {
 
         fun alive(value: Double, depth: Int) =
-            GameResult(decrement(value, depth), isWin = false)
+            GameResult(depth, decrement(value, depth), isWin = false)
 
         fun win(depth: Int) =
-            GameResult(decrement(WIN, depth), isWin = true)
+            GameResult(depth, decrement(WIN, depth), isWin = true)
 
-        fun dead() =
-            GameResult(ZERO, false)
+        fun dead(depth: Int) =
+            GameResult(depth, ZERO, false)
 
         fun decrement(value: Double): Double =
             (value - DELTA).coerceAtLeast(ZERO)

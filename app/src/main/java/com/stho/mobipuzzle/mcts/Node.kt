@@ -14,6 +14,7 @@ open class Node private constructor(val parent: Node?, val depth: Int, val state
     var evaluation: Double = state.evaluate()
     var averageReward: Double = 0.0
     var cumulatedReward: Double = 0.0
+    var winDepth: Int = 0
     var simulations: Int = 0
     var isDirty: Boolean = true
     var isDead: Boolean = false
